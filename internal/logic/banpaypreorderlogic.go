@@ -3,6 +3,7 @@ package logic
 import (
 	"context"
 	"strings"
+	"time"
 
 	"github.com/starslipay/order_mgr/internal/consts"
 	"github.com/starslipay/order_mgr/internal/svc"
@@ -111,6 +112,7 @@ func (l *BanPayPreOrderLogic) handleNewOrder(in *order_mgr_pb.BanPayPreOrderReq)
 		Amount:        in.Amount,
 		PayType:       consts.OrderPayTypeBanPay,
 		TradeState:    consts.OrderTradeStateInit,
+		PayTime:       time.Now(), // TODO 修改为无效时间
 	}
 
 	_, err := l.svcCtx.TOrderModelMaster.Insert(l.ctx, order)
