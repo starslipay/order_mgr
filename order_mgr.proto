@@ -4,6 +4,20 @@ package order_mgr;
 // 相对路径;包名
 option go_package = "./order_mgr_pb";
 
+message OrderInfo {
+    string transaction_id = 1;
+    string out_order_no = 2;
+    string merchant_id = 3;
+    int64 merchant_uid = 4;
+    string merchant_name = 5;
+    string user_id = 6;
+    int64 uid = 7;
+    int64 amount = 8;
+    string pay_time = 9;
+    int32 trade_state = 10;
+    string order_success_token = 11;
+}
+
 message BanPayPreOrderReq {
     string transaction_id = 1;
     string out_order_no = 2;
@@ -17,22 +31,6 @@ message BanPayPreOrderReq {
 
 message BanPayPreOrderRsp {
     string transaction_id = 1;
-    int32 is_already_success = 2;
-    OrderInfo order_info = 3;
-}
-
-message OrderInfo {
-    string transaction_id = 1;
-    string out_order_no = 2;
-    string merchant_id = 3;
-    int64 merchant_uid = 4;
-    string merchant_name = 5;
-    string user_id = 6;
-    int64 uid = 7;
-    int64 amount = 8;
-    string pay_time = 9;
-    int32 trade_state = 10;
-    string order_success_token = 11;
 }
 
 message BanPaySuccessOrderReq {

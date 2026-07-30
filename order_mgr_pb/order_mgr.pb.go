@@ -122,12 +122,10 @@ func (x *BanPayPreOrderReq) GetAmount() int64 {
 }
 
 type BanPayPreOrderRsp struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	TransactionId    string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	IsAlreadySuccess int32                  `protobuf:"varint,2,opt,name=is_already_success,json=isAlreadySuccess,proto3" json:"is_already_success,omitempty"`
-	OrderInfo        *OrderInfo             `protobuf:"bytes,3,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *BanPayPreOrderRsp) Reset() {
@@ -165,20 +163,6 @@ func (x *BanPayPreOrderRsp) GetTransactionId() string {
 		return x.TransactionId
 	}
 	return ""
-}
-
-func (x *BanPayPreOrderRsp) GetIsAlreadySuccess() int32 {
-	if x != nil {
-		return x.IsAlreadySuccess
-	}
-	return 0
-}
-
-func (x *BanPayPreOrderRsp) GetOrderInfo() *OrderInfo {
-	if x != nil {
-		return x.OrderInfo
-	}
-	return nil
 }
 
 type OrderInfo struct {
@@ -664,12 +648,9 @@ const file_order_mgr_proto_rawDesc = "" +
 	"\rmerchant_name\x18\x05 \x01(\tR\fmerchantName\x12\x17\n" +
 	"\auser_id\x18\x06 \x01(\tR\x06userId\x12\x10\n" +
 	"\x03uid\x18\a \x01(\x03R\x03uid\x12\x16\n" +
-	"\x06amount\x18\b \x01(\x03R\x06amount\"\x9d\x01\n" +
+	"\x06amount\x18\b \x01(\x03R\x06amount\":\n" +
 	"\x11BanPayPreOrderRsp\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12,\n" +
-	"\x12is_already_success\x18\x02 \x01(\x05R\x10isAlreadySuccess\x123\n" +
-	"\n" +
-	"order_info\x18\x03 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo\"\xec\x02\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"\xec\x02\n" +
 	"\tOrderInfo\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12 \n" +
 	"\fout_order_no\x18\x02 \x01(\tR\n" +
@@ -746,23 +727,22 @@ var file_order_mgr_proto_goTypes = []any{
 	(*QueryOrderRsp)(nil),         // 8: order_mgr.QueryOrderRsp
 }
 var file_order_mgr_proto_depIdxs = []int32{
-	2, // 0: order_mgr.BanPayPreOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	2, // 1: order_mgr.BanPaySuccessOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	2, // 2: order_mgr.CloseOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	2, // 3: order_mgr.QueryOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	0, // 4: order_mgr.OrderMgr.BanPayPreOrder:input_type -> order_mgr.BanPayPreOrderReq
-	3, // 5: order_mgr.OrderMgr.BanPaySuccessOrder:input_type -> order_mgr.BanPaySuccessOrderReq
-	5, // 6: order_mgr.OrderMgr.CloseOrder:input_type -> order_mgr.CloseOrderReq
-	7, // 7: order_mgr.OrderMgr.QueryOrder:input_type -> order_mgr.QueryOrderReq
-	1, // 8: order_mgr.OrderMgr.BanPayPreOrder:output_type -> order_mgr.BanPayPreOrderRsp
-	4, // 9: order_mgr.OrderMgr.BanPaySuccessOrder:output_type -> order_mgr.BanPaySuccessOrderRsp
-	6, // 10: order_mgr.OrderMgr.CloseOrder:output_type -> order_mgr.CloseOrderRsp
-	8, // 11: order_mgr.OrderMgr.QueryOrder:output_type -> order_mgr.QueryOrderRsp
-	8, // [8:12] is the sub-list for method output_type
-	4, // [4:8] is the sub-list for method input_type
-	4, // [4:4] is the sub-list for extension type_name
-	4, // [4:4] is the sub-list for extension extendee
-	0, // [0:4] is the sub-list for field type_name
+	2, // 0: order_mgr.BanPaySuccessOrderRsp.order_info:type_name -> order_mgr.OrderInfo
+	2, // 1: order_mgr.CloseOrderRsp.order_info:type_name -> order_mgr.OrderInfo
+	2, // 2: order_mgr.QueryOrderRsp.order_info:type_name -> order_mgr.OrderInfo
+	0, // 3: order_mgr.OrderMgr.BanPayPreOrder:input_type -> order_mgr.BanPayPreOrderReq
+	3, // 4: order_mgr.OrderMgr.BanPaySuccessOrder:input_type -> order_mgr.BanPaySuccessOrderReq
+	5, // 5: order_mgr.OrderMgr.CloseOrder:input_type -> order_mgr.CloseOrderReq
+	7, // 6: order_mgr.OrderMgr.QueryOrder:input_type -> order_mgr.QueryOrderReq
+	1, // 7: order_mgr.OrderMgr.BanPayPreOrder:output_type -> order_mgr.BanPayPreOrderRsp
+	4, // 8: order_mgr.OrderMgr.BanPaySuccessOrder:output_type -> order_mgr.BanPaySuccessOrderRsp
+	6, // 9: order_mgr.OrderMgr.CloseOrder:output_type -> order_mgr.CloseOrderRsp
+	8, // 10: order_mgr.OrderMgr.QueryOrder:output_type -> order_mgr.QueryOrderRsp
+	7, // [7:11] is the sub-list for method output_type
+	3, // [3:7] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_order_mgr_proto_init() }

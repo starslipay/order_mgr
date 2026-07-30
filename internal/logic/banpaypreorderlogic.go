@@ -6,7 +6,6 @@ import (
 
 	"github.com/starslipay/order_mgr/internal/consts"
 	"github.com/starslipay/order_mgr/internal/svc"
-	"github.com/starslipay/order_mgr/internal/util"
 	"github.com/starslipay/order_mgr/internal/xerr"
 	"github.com/starslipay/order_mgr/model/mysql"
 	"github.com/starslipay/order_mgr/order_mgr_pb"
@@ -78,29 +77,10 @@ func (l *BanPayPreOrderLogic) handleExistingOrder(in *order_mgr_pb.BanPayPreOrde
 			}
 
 			rsp = &order_mgr_pb.BanPayPreOrderRsp{
-				TransactionId:    order.TransactionId,
-				IsAlreadySuccess: 0,
+				TransactionId: order.TransactionId,
 			}
-
 		case consts.OrderTradeStateSuccess:
-			// 生成订单成功凭证
-			orderSuccessToken := util.GenOrderSuccessToken(order.TransactionId, order.OutOrderNo,
-				order.MerchantUid, order.Uid, order.Amount)
-
-			rsp = &order_mgr_pb.BanPayPreOrderRsp{
-				OrderInfo: &order_mgr_pb.OrderInfo{
-					TransactionId:     order.TransactionId,
-					OutOrderNo:        order.OutOrderNo,
-					MerchantId:        order.MerchantId,
-					MerchantUid:       order.MerchantUid,
-					UserId:            order.UserId,
-					Uid:               order.Uid,
-					Amount:            order.Amount,
-					PayTime:           order.PayTime.Format("2006-01-02 15:04:05"),
-					TradeState:        int32(order.TradeState),
-					OrderSuccessToken: orderSuccessToken,
-				},
-			}
+			return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccess, "order already success")
 
 		case consts.OrderTradeStateClose:
 			return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadyClosed, "order already closed")
@@ -142,8 +122,7 @@ func (l *BanPayPreOrderLogic) handleNewOrder(in *order_mgr_pb.BanPayPreOrderReq)
 	}
 
 	return &order_mgr_pb.BanPayPreOrderRsp{
-		TransactionId:    order.TransactionId,
-		IsAlreadySuccess: 0,
+		TransactionId: order.TransactionId,
 	}, nil
 }
 

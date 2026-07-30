@@ -15,9 +15,10 @@ var (
 
 	// 业务错误码 1000-1999
 	ErrCodeOrderNotFound                        = ModuleErrorBase + 1000
-	ErrCodeOrderAlreadyClosed                   = ModuleErrorBase + 1001
-	ErrCodeOrderTradeStateInvalid               = ModuleErrorBase + 1002
-	ErrCodeOrderDuplicate                       = ModuleErrorBase + 1003
-	ErrCodeInsertCloseOrderButOrderAlreadyExist = ModuleErrorBase + 1004
-	ErrCodeOrderInfoNotMatch                    = ModuleErrorBase + 1005
+	ErrCodeOrderAlreadySuccess                  = ModuleErrorBase + 1001
+	ErrCodeOrderAlreadyClosed                   = ModuleErrorBase + 1002
+	ErrCodeOrderTradeStateInvalid               = ModuleErrorBase + 1003
+	ErrCodeOrderDuplicate                       = ModuleErrorBase + 1004
+	ErrCodeInsertCloseOrderButOrderAlreadyExist = ModuleErrorBase + 1005
+	ErrCodeOrderInfoNotMatch                    = ModuleErrorBase + 1006
 )
