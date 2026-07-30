@@ -1,0 +1,69 @@
+syntax = "proto3";
+
+package order_mgr;
+// 相对路径;包名
+option go_package = "./order_mgr_pb";
+
+message BanPayPreOrderReq {
+    string transaction_id = 1;
+    string spid = 2;
+    string user_id = 3;
+    int64 uid = 4;
+    int64 amount = 5;
+}
+
+message BanPayPreOrderRsp {
+    OrderInfo order_info = 3;
+}
+
+message OrderInfo {
+    string transaction_id = 1;
+    string spid = 2;
+    string user_id = 3;
+    int64 uid = 4;
+    int64 amount = 5;
+    string pay_time = 6;
+    int32 trade_state = 7;
+    string order_success_token = 8;
+}
+
+message BanPaySuccessOrderReq {
+    string transaction_id = 1;
+    string spid = 2;
+    string user_id = 3;
+    int64 uid = 4;
+    int64 amount = 5;
+    string pay_time = 6;
+    string deduct_token = 7;  // 扣款签名
+}
+
+message BanPaySuccessOrderRsp {
+    OrderInfo order_info = 3;
+}
+
+message CloseOrderReq {
+    string transaction_id = 1;
+    string spid = 2;
+    string user_id = 3;
+    int64 uid = 4;
+    int64 amount = 5;
+}
+
+message CloseOrderRsp {
+    OrderInfo order_info = 3;
+}
+
+message QueryOrderReq {
+    string transaction_id = 1;
+}
+
+message QueryOrderRsp {
+    OrderInfo order_info = 2;
+}
+
+service OrderMgr {    
+    rpc BanPayPreOrder(BanPayPreOrderReq) returns (BanPayPreOrderRsp);
+    rpc BanPaySuccessOrder(BanPaySuccessOrderReq) returns (BanPaySuccessOrderRsp);
+    rpc CloseOrder(CloseOrderReq) returns (CloseOrderRsp);
+    rpc QueryOrder(QueryOrderReq) returns (QueryOrderRsp);
+}

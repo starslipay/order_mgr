@@ -1,0 +1,15 @@
+Name: ordermgr.rpc
+ListenOn: 0.0.0.0:8080
+Timeout: 10000
+Etcd:
+  Hosts:
+  - etcd:2379
+  Key: ordermgr.rpc
+
+MasterDBConfig:
+  # DataSource: root:root123456@tcp(mysql-primary.pay-ns.svc.cluster.local:3306)/account_db?charset=utf8mb4&parseTime=True&loc=Local&timeout=5s&readTimeout=10s&writeTimeout=10s # K8S
+  DataSource: root:root123456@tcp(mysql8:3306)/account_db?charset=utf8mb4&parseTime=True&loc=Local&timeout=5s&readTimeout=10s&writeTimeout=10s # 本地开发环境
+
+SlaveDBConfig:
+  # DataSource: starslipay:payClipayA2026@tcp(mysql-slave.pay-ns.svc.cluster.local:3306)/account_db?charset=utf8mb4&parseTime=True&loc=Local&timeout=5s&readTimeout=10s&writeTimeout=10s #K8S
+  DataSource: root:root123456@tcp(mysql8:3306)/account_db?charset=utf8mb4&parseTime=True&loc=Local&timeout=5s&readTimeout=10s&writeTimeout=10s # 本地开发环境
