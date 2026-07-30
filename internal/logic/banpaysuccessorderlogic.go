@@ -31,12 +31,36 @@ func NewBanPaySuccessOrderLogic(ctx context.Context, svcCtx *svc.ServiceContext)
 	}
 }
 
+func (l *BanPaySuccessOrderLogic) checkOrderInfoConsistency(order *mysql.TOrder, in *order_mgr_pb.BanPaySuccessOrderReq) error {
+	if order.OutOrderNo != in.OutOrderNo {
+		return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderInfoNotMatch, "order update success, but out_order_no not match")
+	}
+
+	if order.UserId != in.UserId {
+		return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderInfoNotMatch, "order update success, but user id not match")
+	}
+	if order.Uid != in.Uid {
+		return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderInfoNotMatch, "order update success, but uid not match")
+	}
+	if order.MerchantId != in.MerchantId {
+		return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderInfoNotMatch, "order update success, but merchant id not match")
+	}
+
+	if order.MerchantUid != in.MerchantUid {
+		return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderInfoNotMatch, "order update success, but merchant uid not match")
+	}
+
+	if order.Amount != in.Amount {
+		return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderInfoNotMatch, "order update success, but amount not match")
+	}
+	return nil
+}
+
 func (l *BanPaySuccessOrderLogic) BanPaySuccessOrder(in *order_mgr_pb.BanPaySuccessOrderReq) (rsp *order_mgr_pb.BanPaySuccessOrderRsp, err error) {
 	err = l.svcCtx.SqlMasterConn.TransactCtx(l.ctx, func(ctx context.Context, session sqlx.Session) error {
 		// 在事务内创建绑定到当前会话的 model，所有操作在同一事务中执行
 		model := l.svcCtx.TOrderModelMaster.WithSession(session)
 
-		// 使用 FOR UPDATE 锁定订单行，事务持有行锁直到提交
 		order, err := model.FindOneForUpdate(ctx, in.TransactionId)
 		if err != nil {
 			if err == mysql.ErrNotFound {
@@ -48,43 +72,28 @@ func (l *BanPaySuccessOrderLogic) BanPaySuccessOrder(in *order_mgr_pb.BanPaySucc
 		switch order.TradeState {
 		case consts.OrderTradeStateInit:
 			// 校验关键信息一致性
-			if order.Amount != in.Amount {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccessButInfoNotMatch, "order already success, but amount not match")
-			}
-			if order.UserId != in.UserId {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccessButInfoNotMatch, "order already success, but user id not match")
-			}
-			if order.Uid != in.Uid {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccessButInfoNotMatch, "order already success, but uid not match")
-			}
-			if order.Spid != in.Spid {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccessButInfoNotMatch, "order already success, but spid not match")
+			err = l.checkOrderInfoConsistency(order, in)
+			if err != nil {
+				return err
 			}
 
-			order.TradeState = consts.OrderTradeStateSuccess
 			payTime, err := time.Parse("2006-01-02 15:04:05", in.PayTime)
 			if err != nil {
 				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "pay time format error")
 			}
 			order.PayTime = payTime
+			order.TradeState = consts.OrderTradeStateSuccess
+
 			err = model.Update(ctx, order)
 			if err != nil {
 				return xerror.NewBizError(codes.Internal, xerr.ErrCodeDB, err.Error())
 			}
 
 		case consts.OrderTradeStateSuccess:
-			// 已支付成功：校验关键信息一致性
-			if order.Amount != in.Amount {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "order already success, but amount not match")
-			}
-			if order.UserId != in.UserId {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "order already success, but user id not match")
-			}
-			if order.Uid != in.Uid {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "order already success, but uid not match")
-			}
-			if order.Spid != in.Spid {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "order already success, but spid not match")
+			// 校验关键信息一致性
+			err = l.checkOrderInfoConsistency(order, in)
+			if err != nil {
+				return err
 			}
 		case consts.OrderTradeStateClose:
 			return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadyClosed, "order already closed")
@@ -94,23 +103,24 @@ func (l *BanPaySuccessOrderLogic) BanPaySuccessOrder(in *order_mgr_pb.BanPaySucc
 		}
 
 		// 生成订单成功凭证
-		orderSuccessToken := util.GenOrderSuccessToken(order.TransactionId, order.Spid, order.UserId, order.Uid, order.Amount)
+		orderSuccessToken := util.GenOrderSuccessToken(order.TransactionId, order.OutOrderNo, order.MerchantUid, order.Uid, order.Amount)
 		rsp = &order_mgr_pb.BanPaySuccessOrderRsp{
 			OrderInfo: &order_mgr_pb.OrderInfo{
 				TransactionId:     order.TransactionId,
-				Spid:              order.Spid,
+				OutOrderNo:        order.OutOrderNo,
+				MerchantId:        order.MerchantId,
+				MerchantUid:       order.MerchantUid,
 				UserId:            order.UserId,
 				Uid:               order.Uid,
 				Amount:            order.Amount,
 				PayTime:           order.PayTime.Format("2006-01-02 15:04:05"),
-				TradeState:        consts.OrderTradeStateSuccess,
+				TradeState:        int32(order.TradeState),
 				OrderSuccessToken: orderSuccessToken,
 			},
 		}
 
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}

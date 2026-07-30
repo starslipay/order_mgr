@@ -19,5 +19,5 @@ var (
 	ErrCodeOrderTradeStateInvalid               = ModuleErrorBase + 1002
 	ErrCodeOrderDuplicate                       = ModuleErrorBase + 1003
 	ErrCodeInsertCloseOrderButOrderAlreadyExist = ModuleErrorBase + 1004
-	ErrCodeOrderAlreadySuccessButInfoNotMatch   = ModuleErrorBase + 1005
+	ErrCodeOrderInfoNotMatch                    = ModuleErrorBase + 1005
 )

@@ -41,7 +41,10 @@ func (l *QueryOrderLogic) QueryOrder(in *order_mgr_pb.QueryOrderReq) (*order_mgr
 
 	orderInfo := &order_mgr_pb.OrderInfo{
 		TransactionId: order.TransactionId,
-		Spid:          order.Spid,
+		OutOrderNo:    order.OutOrderNo,
+		MerchantId:    order.MerchantId,
+		MerchantUid:   order.MerchantUid,
+		MerchantName:  order.MerchantName,
 		UserId:        order.UserId,
 		Uid:           order.Uid,
 		Amount:        order.Amount,
@@ -50,7 +53,8 @@ func (l *QueryOrderLogic) QueryOrder(in *order_mgr_pb.QueryOrderReq) (*order_mgr
 	}
 
 	if consts.OrderTradeStateSuccess == order.TradeState {
-		orderInfo.OrderSuccessToken = util.GenOrderSuccessToken(order.TransactionId, order.Spid, order.UserId, order.Uid, order.Amount)
+		orderInfo.OrderSuccessToken = util.GenOrderSuccessToken(order.TransactionId, order.OutOrderNo,
+			order.MerchantUid, order.Uid, order.Amount)
 	}
 
 	return &order_mgr_pb.QueryOrderRsp{

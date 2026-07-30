@@ -39,7 +39,6 @@ func (l *BanPayPreOrderLogic) BanPayPreOrder(in *order_mgr_pb.BanPayPreOrderReq)
 	}
 
 	if order != nil {
-		// 订单存在，使用事务 + FOR UPDATE 锁定行
 		return l.handleExistingOrder(in)
 	}
 
@@ -52,7 +51,7 @@ func (l *BanPayPreOrderLogic) handleExistingOrder(in *order_mgr_pb.BanPayPreOrde
 		// 在事务内创建绑定到当前会话的 model，所有操作在同一事务中执行
 		model := l.svcCtx.TOrderModelMaster.WithSession(session)
 
-		// 使用 FOR UPDATE 锁定订单行，事务持有行锁直到提交
+		// 加锁查
 		order, err := model.FindOneForUpdate(ctx, in.TransactionId)
 		if err != nil {
 			if err == mysql.ErrNotFound {
@@ -64,10 +63,14 @@ func (l *BanPayPreOrderLogic) handleExistingOrder(in *order_mgr_pb.BanPayPreOrde
 		switch order.TradeState {
 		case consts.OrderTradeStateInit:
 			// 初始状态：用输入参数更新订单信息(换支付方式时需要更新)
-			order.Spid = in.Spid
+			order.OutOrderNo = in.OutOrderNo
+			order.MerchantId = in.MerchantId
+			order.MerchantUid = in.MerchantUid
+			order.MerchantName = in.MerchantName
 			order.UserId = in.UserId
 			order.Uid = in.Uid
 			order.Amount = in.Amount
+			order.CurType = consts.OrderCurTypeCNY
 			order.PayType = consts.OrderPayTypeBanPay
 
 			if err := model.Update(ctx, order); err != nil {
@@ -75,43 +78,26 @@ func (l *BanPayPreOrderLogic) handleExistingOrder(in *order_mgr_pb.BanPayPreOrde
 			}
 
 			rsp = &order_mgr_pb.BanPayPreOrderRsp{
-				OrderInfo: &order_mgr_pb.OrderInfo{
-					TransactionId: order.TransactionId,
-					Spid:          order.Spid,
-					UserId:        order.UserId,
-					Uid:           order.Uid,
-					Amount:        order.Amount,
-					TradeState:    consts.OrderTradeStateInit,
-				},
+				TransactionId:    order.TransactionId,
+				IsAlreadySuccess: 0,
 			}
 
 		case consts.OrderTradeStateSuccess:
-			// 已支付成功：校验关键信息一致性
-			if order.Amount != in.Amount {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "order already success, but amount not match")
-			}
-			if order.UserId != in.UserId {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "order already success, but user id not match")
-			}
-			if order.Uid != in.Uid {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "order already success, but uid not match")
-			}
-			if order.Spid != in.Spid {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "order already success, but spid not match")
-			}
-
 			// 生成订单成功凭证
-			orderSuccessToken := util.GenOrderSuccessToken(order.TransactionId, order.Spid, order.UserId, order.Uid, order.Amount)
+			orderSuccessToken := util.GenOrderSuccessToken(order.TransactionId, order.OutOrderNo,
+				order.MerchantUid, order.Uid, order.Amount)
 
 			rsp = &order_mgr_pb.BanPayPreOrderRsp{
 				OrderInfo: &order_mgr_pb.OrderInfo{
 					TransactionId:     order.TransactionId,
-					Spid:              order.Spid,
+					OutOrderNo:        order.OutOrderNo,
+					MerchantId:        order.MerchantId,
+					MerchantUid:       order.MerchantUid,
 					UserId:            order.UserId,
 					Uid:               order.Uid,
 					Amount:            order.Amount,
 					PayTime:           order.PayTime.Format("2006-01-02 15:04:05"),
-					TradeState:        consts.OrderTradeStateSuccess,
+					TradeState:        int32(order.TradeState),
 					OrderSuccessToken: orderSuccessToken,
 				},
 			}
@@ -136,7 +122,10 @@ func (l *BanPayPreOrderLogic) handleExistingOrder(in *order_mgr_pb.BanPayPreOrde
 func (l *BanPayPreOrderLogic) handleNewOrder(in *order_mgr_pb.BanPayPreOrderReq) (*order_mgr_pb.BanPayPreOrderRsp, error) {
 	order := &mysql.TOrder{
 		TransactionId: in.TransactionId,
-		Spid:          in.Spid,
+		OutOrderNo:    in.OutOrderNo,
+		MerchantId:    in.MerchantId,
+		MerchantUid:   in.MerchantUid,
+		MerchantName:  in.MerchantName,
 		UserId:        in.UserId,
 		Uid:           in.Uid,
 		Amount:        in.Amount,
@@ -153,14 +142,8 @@ func (l *BanPayPreOrderLogic) handleNewOrder(in *order_mgr_pb.BanPayPreOrderReq)
 	}
 
 	return &order_mgr_pb.BanPayPreOrderRsp{
-		OrderInfo: &order_mgr_pb.OrderInfo{
-			TransactionId: in.TransactionId,
-			Spid:          in.Spid,
-			UserId:        in.UserId,
-			Uid:           in.Uid,
-			Amount:        in.Amount,
-			TradeState:    consts.OrderTradeStateInit,
-		},
+		TransactionId:    order.TransactionId,
+		IsAlreadySuccess: 0,
 	}, nil
 }
 

@@ -6,50 +6,58 @@ option go_package = "./order_mgr_pb";
 
 message BanPayPreOrderReq {
     string transaction_id = 1;
-    string spid = 2;
-    string user_id = 3;
-    int64 uid = 4;
-    int64 amount = 5;
+    string out_order_no = 2;
+    string merchant_id = 3;
+    int64 merchant_uid = 4;
+    string merchant_name = 5;
+    string user_id = 6;
+    int64 uid = 7;
+    int64 amount = 8;
 }
 
 message BanPayPreOrderRsp {
+    string transaction_id = 1;
+    int32 is_already_success = 2;
     OrderInfo order_info = 3;
 }
 
 message OrderInfo {
     string transaction_id = 1;
-    string spid = 2;
-    string user_id = 3;
-    int64 uid = 4;
-    int64 amount = 5;
-    string pay_time = 6;
-    int32 trade_state = 7;
-    string order_success_token = 8;
+    string out_order_no = 2;
+    string merchant_id = 3;
+    int64 merchant_uid = 4;
+    string merchant_name = 5;
+    string user_id = 6;
+    int64 uid = 7;
+    int64 amount = 8;
+    string pay_time = 9;
+    int32 trade_state = 10;
+    string order_success_token = 11;
 }
 
 message BanPaySuccessOrderReq {
     string transaction_id = 1;
-    string spid = 2;
-    string user_id = 3;
-    int64 uid = 4;
-    int64 amount = 5;
-    string pay_time = 6;
-    string deduct_token = 7;  // 扣款签名
+    string out_order_no = 2;
+    string merchant_id = 3;
+    int64 merchant_uid = 4;
+    string user_id = 5;
+    int64 uid = 6;
+    int64 amount = 7;
+    string pay_time = 8;
+    string deduct_token = 9;  // 扣款签名
 }
 
 message BanPaySuccessOrderRsp {
-    OrderInfo order_info = 3;
+    OrderInfo order_info = 1;
 }
 
 message CloseOrderReq {
     string transaction_id = 1;
-    string spid = 2;
-    string user_id = 3;
-    int64 uid = 4;
-    int64 amount = 5;
 }
 
 message CloseOrderRsp {
+    string transaction_id = 1;
+    int32 is_already_success = 2;
     OrderInfo order_info = 3;
 }
 
@@ -58,7 +66,7 @@ message QueryOrderReq {
 }
 
 message QueryOrderRsp {
-    OrderInfo order_info = 2;
+    OrderInfo order_info = 1;
 }
 
 service OrderMgr {    

@@ -38,7 +38,6 @@ func (l *CloseOrderLogic) CloseOrder(in *order_mgr_pb.CloseOrderReq) (*order_mgr
 	}
 
 	if order != nil {
-		// 订单存在，在事务中执行 FOR UPDATE 加锁处理
 		return l.closeExistingOrder(in)
 	}
 
@@ -53,7 +52,6 @@ func (l *CloseOrderLogic) closeExistingOrder(in *order_mgr_pb.CloseOrderReq) (*o
 		// 在事务内创建绑定到当前会话的 model
 		model := l.svcCtx.TOrderModelMaster.WithSession(session)
 
-		// FOR UPDATE 加锁查询，事务持有行锁直到提交
 		order, err := model.FindOneForUpdate(ctx, in.TransactionId)
 		if err != nil {
 			if err == mysql.ErrNotFound {
@@ -72,55 +70,33 @@ func (l *CloseOrderLogic) closeExistingOrder(in *order_mgr_pb.CloseOrderReq) (*o
 			}
 
 			rsp = &order_mgr_pb.CloseOrderRsp{
-				OrderInfo: &order_mgr_pb.OrderInfo{
-					TransactionId: order.TransactionId,
-					Spid:          order.Spid,
-					UserId:        order.UserId,
-					Uid:           order.Uid,
-					Amount:        order.Amount,
-					TradeState:    consts.OrderTradeStateClose,
-				},
+				TransactionId:    order.TransactionId,
+				IsAlreadySuccess: 0,
 			}
 
 		case consts.OrderTradeStateClose:
 			// 已关单：直接返回成功（幂等）
 			rsp = &order_mgr_pb.CloseOrderRsp{
-				OrderInfo: &order_mgr_pb.OrderInfo{
-					TransactionId: order.TransactionId,
-					Spid:          order.Spid,
-					UserId:        order.UserId,
-					Uid:           order.Uid,
-					Amount:        order.Amount,
-					TradeState:    consts.OrderTradeStateClose,
-				},
+				TransactionId:    order.TransactionId,
+				IsAlreadySuccess: 0,
 			}
 
 		case consts.OrderTradeStateSuccess:
 			// 校验关键信息一致性
-			if order.Amount != in.Amount {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccessButInfoNotMatch, "order already success, but amount not match")
-			}
-			if order.UserId != in.UserId {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccessButInfoNotMatch, "order already success, but user id not match")
-			}
-			if order.Uid != in.Uid {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccessButInfoNotMatch, "order already success, but uid not match")
-			}
-			if order.Spid != in.Spid {
-				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccessButInfoNotMatch, "order already success, but spid not match")
-			}
-
-			orderSuccessToken := util.GenOrderSuccessToken(order.TransactionId, order.Spid, order.UserId, order.Uid, order.Amount)
+			orderSuccessToken := util.GenOrderSuccessToken(order.TransactionId, order.OutOrderNo,
+				order.MerchantUid, order.Uid, order.Amount)
 
 			rsp = &order_mgr_pb.CloseOrderRsp{
 				OrderInfo: &order_mgr_pb.OrderInfo{
 					TransactionId:     order.TransactionId,
-					Spid:              order.Spid,
+					OutOrderNo:        order.OutOrderNo,
+					MerchantId:        order.MerchantId,
+					MerchantUid:       order.MerchantUid,
 					UserId:            order.UserId,
 					Uid:               order.Uid,
 					Amount:            order.Amount,
 					PayTime:           order.PayTime.Format("2006-01-02 15:04:05"),
-					TradeState:        consts.OrderTradeStateSuccess,
+					TradeState:        int32(order.TradeState),
 					OrderSuccessToken: orderSuccessToken,
 				},
 			}
@@ -155,9 +131,7 @@ func (l *CloseOrderLogic) closeNonExistOrder(in *order_mgr_pb.CloseOrderReq) (*o
 	}
 
 	return &order_mgr_pb.CloseOrderRsp{
-		OrderInfo: &order_mgr_pb.OrderInfo{
-			TransactionId: in.TransactionId,
-			TradeState:    consts.OrderTradeStateClose,
-		},
+		TransactionId:    order.TransactionId,
+		IsAlreadySuccess: 0,
 	}, nil
 }

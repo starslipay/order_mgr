@@ -9,3 +9,7 @@ const (
 const (
 	OrderPayTypeBanPay = 1 // 余额支付
 )
+
+const (
+	OrderCurTypeCNY = 1 // 人民币
+)

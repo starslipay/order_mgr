@@ -38,16 +38,19 @@ type (
 
 	TOrder struct {
 		TransactionId string    `db:"transaction_id"` // 交易ID
-		Spid          string    `db:"spid"`           // 商户ID
+		OutOrderNo    string    `db:"out_order_no"`   // 商户订单号
+		MerchantId    string    `db:"merchant_id"`    // 商户ID
+		MerchantUid   int64     `db:"merchant_uid"`   // 商户uid
+		MerchantName  string    `db:"merchant_name"`  // 商户名称
 		UserId        string    `db:"user_id"`        // 用户ID
 		Uid           int64     `db:"uid"`            // 用户uid
+		TradeState    int64     `db:"trade_state"`    // 交易状态
 		Amount        int64     `db:"amount"`         // 金额
 		CurType       int64     `db:"cur_type"`       // 货币类型
-		TradeState    int64     `db:"trade_state"`    // 交易状态
 		PayType       int64     `db:"pay_type"`       // 支付类型
 		PayTime       time.Time `db:"pay_time"`       // 支付时间
-		CreateTime    time.Time `db:"create_time"`    // 创建时间
-		UpdateTime    time.Time `db:"update_time"`    // 更新时间
+		CreateTime    time.Time `db:"create_time"`
+		UpdateTime    time.Time `db:"update_time"`
 	}
 )
 
@@ -79,14 +82,14 @@ func (m *defaultTOrderModel) FindOne(ctx context.Context, transactionId string) 
 }
 
 func (m *defaultTOrderModel) Insert(ctx context.Context, data *TOrder) (sql.Result, error) {
-	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, tOrderRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.TransactionId, data.Spid, data.UserId, data.Uid, data.Amount, data.CurType, data.TradeState, data.PayType, data.PayTime)
+	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, tOrderRowsExpectAutoSet)
+	ret, err := m.conn.ExecCtx(ctx, query, data.TransactionId, data.OutOrderNo, data.MerchantId, data.MerchantUid, data.MerchantName, data.UserId, data.Uid, data.TradeState, data.Amount, data.CurType, data.PayType, data.PayTime)
 	return ret, err
 }
 
 func (m *defaultTOrderModel) Update(ctx context.Context, data *TOrder) error {
 	query := fmt.Sprintf("update %s set %s where `transaction_id` = ?", m.table, tOrderRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, data.Spid, data.UserId, data.Uid, data.Amount, data.CurType, data.TradeState, data.PayType, data.PayTime, data.TransactionId)
+	_, err := m.conn.ExecCtx(ctx, query, data.OutOrderNo, data.MerchantId, data.MerchantUid, data.MerchantName, data.UserId, data.Uid, data.TradeState, data.Amount, data.CurType, data.PayType, data.PayTime, data.TransactionId)
 	return err
 }
 

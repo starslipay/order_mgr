@@ -24,10 +24,13 @@ const (
 type BanPayPreOrderReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	Spid          string                 `protobuf:"bytes,2,opt,name=spid,proto3" json:"spid,omitempty"`
-	UserId        string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Uid           int64                  `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`
-	Amount        int64                  `protobuf:"varint,5,opt,name=amount,proto3" json:"amount,omitempty"`
+	OutOrderNo    string                 `protobuf:"bytes,2,opt,name=out_order_no,json=outOrderNo,proto3" json:"out_order_no,omitempty"`
+	MerchantId    string                 `protobuf:"bytes,3,opt,name=merchant_id,json=merchantId,proto3" json:"merchant_id,omitempty"`
+	MerchantUid   int64                  `protobuf:"varint,4,opt,name=merchant_uid,json=merchantUid,proto3" json:"merchant_uid,omitempty"`
+	MerchantName  string                 `protobuf:"bytes,5,opt,name=merchant_name,json=merchantName,proto3" json:"merchant_name,omitempty"`
+	UserId        string                 `protobuf:"bytes,6,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Uid           int64                  `protobuf:"varint,7,opt,name=uid,proto3" json:"uid,omitempty"`
+	Amount        int64                  `protobuf:"varint,8,opt,name=amount,proto3" json:"amount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -69,9 +72,30 @@ func (x *BanPayPreOrderReq) GetTransactionId() string {
 	return ""
 }
 
-func (x *BanPayPreOrderReq) GetSpid() string {
+func (x *BanPayPreOrderReq) GetOutOrderNo() string {
 	if x != nil {
-		return x.Spid
+		return x.OutOrderNo
+	}
+	return ""
+}
+
+func (x *BanPayPreOrderReq) GetMerchantId() string {
+	if x != nil {
+		return x.MerchantId
+	}
+	return ""
+}
+
+func (x *BanPayPreOrderReq) GetMerchantUid() int64 {
+	if x != nil {
+		return x.MerchantUid
+	}
+	return 0
+}
+
+func (x *BanPayPreOrderReq) GetMerchantName() string {
+	if x != nil {
+		return x.MerchantName
 	}
 	return ""
 }
@@ -98,10 +122,12 @@ func (x *BanPayPreOrderReq) GetAmount() int64 {
 }
 
 type BanPayPreOrderRsp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderInfo     *OrderInfo             `protobuf:"bytes,3,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId    string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	IsAlreadySuccess int32                  `protobuf:"varint,2,opt,name=is_already_success,json=isAlreadySuccess,proto3" json:"is_already_success,omitempty"`
+	OrderInfo        *OrderInfo             `protobuf:"bytes,3,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *BanPayPreOrderRsp) Reset() {
@@ -134,6 +160,20 @@ func (*BanPayPreOrderRsp) Descriptor() ([]byte, []int) {
 	return file_order_mgr_proto_rawDescGZIP(), []int{1}
 }
 
+func (x *BanPayPreOrderRsp) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *BanPayPreOrderRsp) GetIsAlreadySuccess() int32 {
+	if x != nil {
+		return x.IsAlreadySuccess
+	}
+	return 0
+}
+
 func (x *BanPayPreOrderRsp) GetOrderInfo() *OrderInfo {
 	if x != nil {
 		return x.OrderInfo
@@ -144,13 +184,16 @@ func (x *BanPayPreOrderRsp) GetOrderInfo() *OrderInfo {
 type OrderInfo struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId     string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	Spid              string                 `protobuf:"bytes,2,opt,name=spid,proto3" json:"spid,omitempty"`
-	UserId            string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Uid               int64                  `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`
-	Amount            int64                  `protobuf:"varint,5,opt,name=amount,proto3" json:"amount,omitempty"`
-	PayTime           string                 `protobuf:"bytes,6,opt,name=pay_time,json=payTime,proto3" json:"pay_time,omitempty"`
-	TradeState        int32                  `protobuf:"varint,7,opt,name=trade_state,json=tradeState,proto3" json:"trade_state,omitempty"`
-	OrderSuccessToken string                 `protobuf:"bytes,8,opt,name=order_success_token,json=orderSuccessToken,proto3" json:"order_success_token,omitempty"`
+	OutOrderNo        string                 `protobuf:"bytes,2,opt,name=out_order_no,json=outOrderNo,proto3" json:"out_order_no,omitempty"`
+	MerchantId        string                 `protobuf:"bytes,3,opt,name=merchant_id,json=merchantId,proto3" json:"merchant_id,omitempty"`
+	MerchantUid       int64                  `protobuf:"varint,4,opt,name=merchant_uid,json=merchantUid,proto3" json:"merchant_uid,omitempty"`
+	MerchantName      string                 `protobuf:"bytes,5,opt,name=merchant_name,json=merchantName,proto3" json:"merchant_name,omitempty"`
+	UserId            string                 `protobuf:"bytes,6,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Uid               int64                  `protobuf:"varint,7,opt,name=uid,proto3" json:"uid,omitempty"`
+	Amount            int64                  `protobuf:"varint,8,opt,name=amount,proto3" json:"amount,omitempty"`
+	PayTime           string                 `protobuf:"bytes,9,opt,name=pay_time,json=payTime,proto3" json:"pay_time,omitempty"`
+	TradeState        int32                  `protobuf:"varint,10,opt,name=trade_state,json=tradeState,proto3" json:"trade_state,omitempty"`
+	OrderSuccessToken string                 `protobuf:"bytes,11,opt,name=order_success_token,json=orderSuccessToken,proto3" json:"order_success_token,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
@@ -192,9 +235,30 @@ func (x *OrderInfo) GetTransactionId() string {
 	return ""
 }
 
-func (x *OrderInfo) GetSpid() string {
+func (x *OrderInfo) GetOutOrderNo() string {
 	if x != nil {
-		return x.Spid
+		return x.OutOrderNo
+	}
+	return ""
+}
+
+func (x *OrderInfo) GetMerchantId() string {
+	if x != nil {
+		return x.MerchantId
+	}
+	return ""
+}
+
+func (x *OrderInfo) GetMerchantUid() int64 {
+	if x != nil {
+		return x.MerchantUid
+	}
+	return 0
+}
+
+func (x *OrderInfo) GetMerchantName() string {
+	if x != nil {
+		return x.MerchantName
 	}
 	return ""
 }
@@ -244,12 +308,14 @@ func (x *OrderInfo) GetOrderSuccessToken() string {
 type BanPaySuccessOrderReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	Spid          string                 `protobuf:"bytes,2,opt,name=spid,proto3" json:"spid,omitempty"`
-	UserId        string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Uid           int64                  `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`
-	Amount        int64                  `protobuf:"varint,5,opt,name=amount,proto3" json:"amount,omitempty"`
-	PayTime       string                 `protobuf:"bytes,6,opt,name=pay_time,json=payTime,proto3" json:"pay_time,omitempty"`
-	DeductToken   string                 `protobuf:"bytes,7,opt,name=deduct_token,json=deductToken,proto3" json:"deduct_token,omitempty"` // 扣款签名
+	OutOrderNo    string                 `protobuf:"bytes,2,opt,name=out_order_no,json=outOrderNo,proto3" json:"out_order_no,omitempty"`
+	MerchantId    string                 `protobuf:"bytes,3,opt,name=merchant_id,json=merchantId,proto3" json:"merchant_id,omitempty"`
+	MerchantUid   int64                  `protobuf:"varint,4,opt,name=merchant_uid,json=merchantUid,proto3" json:"merchant_uid,omitempty"`
+	UserId        string                 `protobuf:"bytes,5,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Uid           int64                  `protobuf:"varint,6,opt,name=uid,proto3" json:"uid,omitempty"`
+	Amount        int64                  `protobuf:"varint,7,opt,name=amount,proto3" json:"amount,omitempty"`
+	PayTime       string                 `protobuf:"bytes,8,opt,name=pay_time,json=payTime,proto3" json:"pay_time,omitempty"`
+	DeductToken   string                 `protobuf:"bytes,9,opt,name=deduct_token,json=deductToken,proto3" json:"deduct_token,omitempty"` // 扣款签名
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -291,11 +357,25 @@ func (x *BanPaySuccessOrderReq) GetTransactionId() string {
 	return ""
 }
 
-func (x *BanPaySuccessOrderReq) GetSpid() string {
+func (x *BanPaySuccessOrderReq) GetOutOrderNo() string {
 	if x != nil {
-		return x.Spid
+		return x.OutOrderNo
 	}
 	return ""
+}
+
+func (x *BanPaySuccessOrderReq) GetMerchantId() string {
+	if x != nil {
+		return x.MerchantId
+	}
+	return ""
+}
+
+func (x *BanPaySuccessOrderReq) GetMerchantUid() int64 {
+	if x != nil {
+		return x.MerchantUid
+	}
+	return 0
 }
 
 func (x *BanPaySuccessOrderReq) GetUserId() string {
@@ -335,7 +415,7 @@ func (x *BanPaySuccessOrderReq) GetDeductToken() string {
 
 type BanPaySuccessOrderRsp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderInfo     *OrderInfo             `protobuf:"bytes,3,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
+	OrderInfo     *OrderInfo             `protobuf:"bytes,1,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -380,10 +460,6 @@ func (x *BanPaySuccessOrderRsp) GetOrderInfo() *OrderInfo {
 type CloseOrderReq struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	Spid          string                 `protobuf:"bytes,2,opt,name=spid,proto3" json:"spid,omitempty"`
-	UserId        string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Uid           int64                  `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`
-	Amount        int64                  `protobuf:"varint,5,opt,name=amount,proto3" json:"amount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -425,39 +501,13 @@ func (x *CloseOrderReq) GetTransactionId() string {
 	return ""
 }
 
-func (x *CloseOrderReq) GetSpid() string {
-	if x != nil {
-		return x.Spid
-	}
-	return ""
-}
-
-func (x *CloseOrderReq) GetUserId() string {
-	if x != nil {
-		return x.UserId
-	}
-	return ""
-}
-
-func (x *CloseOrderReq) GetUid() int64 {
-	if x != nil {
-		return x.Uid
-	}
-	return 0
-}
-
-func (x *CloseOrderReq) GetAmount() int64 {
-	if x != nil {
-		return x.Amount
-	}
-	return 0
-}
-
 type CloseOrderRsp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderInfo     *OrderInfo             `protobuf:"bytes,3,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state            protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId    string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	IsAlreadySuccess int32                  `protobuf:"varint,2,opt,name=is_already_success,json=isAlreadySuccess,proto3" json:"is_already_success,omitempty"`
+	OrderInfo        *OrderInfo             `protobuf:"bytes,3,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
+	unknownFields    protoimpl.UnknownFields
+	sizeCache        protoimpl.SizeCache
 }
 
 func (x *CloseOrderRsp) Reset() {
@@ -488,6 +538,20 @@ func (x *CloseOrderRsp) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CloseOrderRsp.ProtoReflect.Descriptor instead.
 func (*CloseOrderRsp) Descriptor() ([]byte, []int) {
 	return file_order_mgr_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CloseOrderRsp) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *CloseOrderRsp) GetIsAlreadySuccess() int32 {
+	if x != nil {
+		return x.IsAlreadySuccess
+	}
+	return 0
 }
 
 func (x *CloseOrderRsp) GetOrderInfo() *OrderInfo {
@@ -543,7 +607,7 @@ func (x *QueryOrderReq) GetTransactionId() string {
 
 type QueryOrderRsp struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	OrderInfo     *OrderInfo             `protobuf:"bytes,2,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
+	OrderInfo     *OrderInfo             `protobuf:"bytes,1,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -589,51 +653,66 @@ var File_order_mgr_proto protoreflect.FileDescriptor
 
 const file_order_mgr_proto_rawDesc = "" +
 	"\n" +
-	"\x0forder_mgr.proto\x12\torder_mgr\"\x91\x01\n" +
+	"\x0forder_mgr.proto\x12\torder_mgr\"\x88\x02\n" +
 	"\x11BanPayPreOrderReq\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x12\n" +
-	"\x04spid\x18\x02 \x01(\tR\x04spid\x12\x17\n" +
-	"\auser_id\x18\x03 \x01(\tR\x06userId\x12\x10\n" +
-	"\x03uid\x18\x04 \x01(\x03R\x03uid\x12\x16\n" +
-	"\x06amount\x18\x05 \x01(\x03R\x06amount\"H\n" +
-	"\x11BanPayPreOrderRsp\x123\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12 \n" +
+	"\fout_order_no\x18\x02 \x01(\tR\n" +
+	"outOrderNo\x12\x1f\n" +
+	"\vmerchant_id\x18\x03 \x01(\tR\n" +
+	"merchantId\x12!\n" +
+	"\fmerchant_uid\x18\x04 \x01(\x03R\vmerchantUid\x12#\n" +
+	"\rmerchant_name\x18\x05 \x01(\tR\fmerchantName\x12\x17\n" +
+	"\auser_id\x18\x06 \x01(\tR\x06userId\x12\x10\n" +
+	"\x03uid\x18\a \x01(\x03R\x03uid\x12\x16\n" +
+	"\x06amount\x18\b \x01(\x03R\x06amount\"\x9d\x01\n" +
+	"\x11BanPayPreOrderRsp\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12,\n" +
+	"\x12is_already_success\x18\x02 \x01(\x05R\x10isAlreadySuccess\x123\n" +
 	"\n" +
-	"order_info\x18\x03 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo\"\xf5\x01\n" +
+	"order_info\x18\x03 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo\"\xec\x02\n" +
 	"\tOrderInfo\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x12\n" +
-	"\x04spid\x18\x02 \x01(\tR\x04spid\x12\x17\n" +
-	"\auser_id\x18\x03 \x01(\tR\x06userId\x12\x10\n" +
-	"\x03uid\x18\x04 \x01(\x03R\x03uid\x12\x16\n" +
-	"\x06amount\x18\x05 \x01(\x03R\x06amount\x12\x19\n" +
-	"\bpay_time\x18\x06 \x01(\tR\apayTime\x12\x1f\n" +
-	"\vtrade_state\x18\a \x01(\x05R\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12 \n" +
+	"\fout_order_no\x18\x02 \x01(\tR\n" +
+	"outOrderNo\x12\x1f\n" +
+	"\vmerchant_id\x18\x03 \x01(\tR\n" +
+	"merchantId\x12!\n" +
+	"\fmerchant_uid\x18\x04 \x01(\x03R\vmerchantUid\x12#\n" +
+	"\rmerchant_name\x18\x05 \x01(\tR\fmerchantName\x12\x17\n" +
+	"\auser_id\x18\x06 \x01(\tR\x06userId\x12\x10\n" +
+	"\x03uid\x18\a \x01(\x03R\x03uid\x12\x16\n" +
+	"\x06amount\x18\b \x01(\x03R\x06amount\x12\x19\n" +
+	"\bpay_time\x18\t \x01(\tR\apayTime\x12\x1f\n" +
+	"\vtrade_state\x18\n" +
+	" \x01(\x05R\n" +
 	"tradeState\x12.\n" +
-	"\x13order_success_token\x18\b \x01(\tR\x11orderSuccessToken\"\xd3\x01\n" +
+	"\x13order_success_token\x18\v \x01(\tR\x11orderSuccessToken\"\xa5\x02\n" +
 	"\x15BanPaySuccessOrderReq\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x12\n" +
-	"\x04spid\x18\x02 \x01(\tR\x04spid\x12\x17\n" +
-	"\auser_id\x18\x03 \x01(\tR\x06userId\x12\x10\n" +
-	"\x03uid\x18\x04 \x01(\x03R\x03uid\x12\x16\n" +
-	"\x06amount\x18\x05 \x01(\x03R\x06amount\x12\x19\n" +
-	"\bpay_time\x18\x06 \x01(\tR\apayTime\x12!\n" +
-	"\fdeduct_token\x18\a \x01(\tR\vdeductToken\"L\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12 \n" +
+	"\fout_order_no\x18\x02 \x01(\tR\n" +
+	"outOrderNo\x12\x1f\n" +
+	"\vmerchant_id\x18\x03 \x01(\tR\n" +
+	"merchantId\x12!\n" +
+	"\fmerchant_uid\x18\x04 \x01(\x03R\vmerchantUid\x12\x17\n" +
+	"\auser_id\x18\x05 \x01(\tR\x06userId\x12\x10\n" +
+	"\x03uid\x18\x06 \x01(\x03R\x03uid\x12\x16\n" +
+	"\x06amount\x18\a \x01(\x03R\x06amount\x12\x19\n" +
+	"\bpay_time\x18\b \x01(\tR\apayTime\x12!\n" +
+	"\fdeduct_token\x18\t \x01(\tR\vdeductToken\"L\n" +
 	"\x15BanPaySuccessOrderRsp\x123\n" +
 	"\n" +
-	"order_info\x18\x03 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo\"\x8d\x01\n" +
+	"order_info\x18\x01 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo\"6\n" +
 	"\rCloseOrderReq\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x12\n" +
-	"\x04spid\x18\x02 \x01(\tR\x04spid\x12\x17\n" +
-	"\auser_id\x18\x03 \x01(\tR\x06userId\x12\x10\n" +
-	"\x03uid\x18\x04 \x01(\x03R\x03uid\x12\x16\n" +
-	"\x06amount\x18\x05 \x01(\x03R\x06amount\"D\n" +
-	"\rCloseOrderRsp\x123\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"\x99\x01\n" +
+	"\rCloseOrderRsp\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12,\n" +
+	"\x12is_already_success\x18\x02 \x01(\x05R\x10isAlreadySuccess\x123\n" +
 	"\n" +
 	"order_info\x18\x03 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo\"6\n" +
 	"\rQueryOrderReq\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"D\n" +
 	"\rQueryOrderRsp\x123\n" +
 	"\n" +
-	"order_info\x18\x02 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo2\xb6\x02\n" +
+	"order_info\x18\x01 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo2\xb6\x02\n" +
 	"\bOrderMgr\x12L\n" +
 	"\x0eBanPayPreOrder\x12\x1c.order_mgr.BanPayPreOrderReq\x1a\x1c.order_mgr.BanPayPreOrderRsp\x12X\n" +
 	"\x12BanPaySuccessOrder\x12 .order_mgr.BanPaySuccessOrderReq\x1a .order_mgr.BanPaySuccessOrderRsp\x12@\n" +
