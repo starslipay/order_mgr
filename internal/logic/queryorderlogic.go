@@ -48,7 +48,7 @@ func (l *QueryOrderLogic) QueryOrder(in *order_mgr_pb.QueryOrderReq) (*order_mgr
 		UserId:        order.UserId,
 		Uid:           order.Uid,
 		Amount:        order.Amount,
-		PayTime:       order.PayTime.Format("2006-01-02 15:04:05"),
+		PayTime:       util.FormatBeijingTime(order.PayTime),
 		TradeState:    int32(order.TradeState),
 	}
 

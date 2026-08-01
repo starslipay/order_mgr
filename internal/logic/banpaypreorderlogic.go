@@ -114,7 +114,7 @@ func (l *BanPayPreOrderLogic) handleNewOrder(in *order_mgr_pb.BanPayPreOrderReq)
 		Amount:        in.Amount,
 		PayType:       consts.OrderPayTypeBanPay,
 		TradeState:    consts.OrderTradeStateInit,
-		PayTime:       time.Now(), // TODO 修改为无效时间
+		PayTime:       time.Now(), // 新建时，默认支付时间为当前时间
 	}
 
 	_, err := l.svcCtx.TOrderModelMaster.Insert(l.ctx, order)

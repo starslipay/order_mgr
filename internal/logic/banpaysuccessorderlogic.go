@@ -2,7 +2,6 @@ package logic
 
 import (
 	"context"
-	"time"
 
 	"github.com/starslipay/order_mgr/internal/consts"
 	"github.com/starslipay/order_mgr/internal/svc"
@@ -77,7 +76,7 @@ func (l *BanPaySuccessOrderLogic) BanPaySuccessOrder(in *order_mgr_pb.BanPaySucc
 				return err
 			}
 
-			payTime, err := time.Parse("2006-01-02 15:04:05", in.PayTime)
+			payTime, err := util.ParseBeijingTime(in.PayTime)
 			if err != nil {
 				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "pay time format error")
 			}
@@ -114,7 +113,7 @@ func (l *BanPaySuccessOrderLogic) BanPaySuccessOrder(in *order_mgr_pb.BanPaySucc
 				UserId:            order.UserId,
 				Uid:               order.Uid,
 				Amount:            order.Amount,
-				PayTime:           order.PayTime.Format("2006-01-02 15:04:05"),
+				PayTime:           util.FormatBeijingTime(order.PayTime),
 				TradeState:        int32(order.TradeState),
 				OrderSuccessToken: orderSuccessToken,
 			},
