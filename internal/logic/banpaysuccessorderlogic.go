@@ -96,6 +96,7 @@ func (l *BanPaySuccessOrderLogic) BanPaySuccessOrder(in *order_mgr_pb.BanPaySucc
 				return err
 			}
 		case consts.OrderTradeStateClose:
+			// 并发冲突，订单已关闭状态，让业务调关补接口重试
 			return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadyClosed, "order already closed")
 
 		default:

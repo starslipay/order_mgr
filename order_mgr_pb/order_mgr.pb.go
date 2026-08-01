@@ -21,150 +21,6 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type BanPayPreOrderReq struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	OutOrderNo    string                 `protobuf:"bytes,2,opt,name=out_order_no,json=outOrderNo,proto3" json:"out_order_no,omitempty"`
-	MerchantId    string                 `protobuf:"bytes,3,opt,name=merchant_id,json=merchantId,proto3" json:"merchant_id,omitempty"`
-	MerchantUid   int64                  `protobuf:"varint,4,opt,name=merchant_uid,json=merchantUid,proto3" json:"merchant_uid,omitempty"`
-	MerchantName  string                 `protobuf:"bytes,5,opt,name=merchant_name,json=merchantName,proto3" json:"merchant_name,omitempty"`
-	UserId        string                 `protobuf:"bytes,6,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Uid           int64                  `protobuf:"varint,7,opt,name=uid,proto3" json:"uid,omitempty"`
-	Amount        int64                  `protobuf:"varint,8,opt,name=amount,proto3" json:"amount,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *BanPayPreOrderReq) Reset() {
-	*x = BanPayPreOrderReq{}
-	mi := &file_order_mgr_proto_msgTypes[0]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BanPayPreOrderReq) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BanPayPreOrderReq) ProtoMessage() {}
-
-func (x *BanPayPreOrderReq) ProtoReflect() protoreflect.Message {
-	mi := &file_order_mgr_proto_msgTypes[0]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BanPayPreOrderReq.ProtoReflect.Descriptor instead.
-func (*BanPayPreOrderReq) Descriptor() ([]byte, []int) {
-	return file_order_mgr_proto_rawDescGZIP(), []int{0}
-}
-
-func (x *BanPayPreOrderReq) GetTransactionId() string {
-	if x != nil {
-		return x.TransactionId
-	}
-	return ""
-}
-
-func (x *BanPayPreOrderReq) GetOutOrderNo() string {
-	if x != nil {
-		return x.OutOrderNo
-	}
-	return ""
-}
-
-func (x *BanPayPreOrderReq) GetMerchantId() string {
-	if x != nil {
-		return x.MerchantId
-	}
-	return ""
-}
-
-func (x *BanPayPreOrderReq) GetMerchantUid() int64 {
-	if x != nil {
-		return x.MerchantUid
-	}
-	return 0
-}
-
-func (x *BanPayPreOrderReq) GetMerchantName() string {
-	if x != nil {
-		return x.MerchantName
-	}
-	return ""
-}
-
-func (x *BanPayPreOrderReq) GetUserId() string {
-	if x != nil {
-		return x.UserId
-	}
-	return ""
-}
-
-func (x *BanPayPreOrderReq) GetUid() int64 {
-	if x != nil {
-		return x.Uid
-	}
-	return 0
-}
-
-func (x *BanPayPreOrderReq) GetAmount() int64 {
-	if x != nil {
-		return x.Amount
-	}
-	return 0
-}
-
-type BanPayPreOrderRsp struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *BanPayPreOrderRsp) Reset() {
-	*x = BanPayPreOrderRsp{}
-	mi := &file_order_mgr_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *BanPayPreOrderRsp) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*BanPayPreOrderRsp) ProtoMessage() {}
-
-func (x *BanPayPreOrderRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_order_mgr_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use BanPayPreOrderRsp.ProtoReflect.Descriptor instead.
-func (*BanPayPreOrderRsp) Descriptor() ([]byte, []int) {
-	return file_order_mgr_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *BanPayPreOrderRsp) GetTransactionId() string {
-	if x != nil {
-		return x.TransactionId
-	}
-	return ""
-}
-
 type OrderInfo struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	TransactionId     string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
@@ -184,7 +40,7 @@ type OrderInfo struct {
 
 func (x *OrderInfo) Reset() {
 	*x = OrderInfo{}
-	mi := &file_order_mgr_proto_msgTypes[2]
+	mi := &file_order_mgr_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -196,7 +52,7 @@ func (x *OrderInfo) String() string {
 func (*OrderInfo) ProtoMessage() {}
 
 func (x *OrderInfo) ProtoReflect() protoreflect.Message {
-	mi := &file_order_mgr_proto_msgTypes[2]
+	mi := &file_order_mgr_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -209,7 +65,7 @@ func (x *OrderInfo) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderInfo.ProtoReflect.Descriptor instead.
 func (*OrderInfo) Descriptor() ([]byte, []int) {
-	return file_order_mgr_proto_rawDescGZIP(), []int{2}
+	return file_order_mgr_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *OrderInfo) GetTransactionId() string {
@@ -285,6 +141,150 @@ func (x *OrderInfo) GetTradeState() int32 {
 func (x *OrderInfo) GetOrderSuccessToken() string {
 	if x != nil {
 		return x.OrderSuccessToken
+	}
+	return ""
+}
+
+type BanPayPreOrderReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	OutOrderNo    string                 `protobuf:"bytes,2,opt,name=out_order_no,json=outOrderNo,proto3" json:"out_order_no,omitempty"`
+	MerchantId    string                 `protobuf:"bytes,3,opt,name=merchant_id,json=merchantId,proto3" json:"merchant_id,omitempty"`
+	MerchantUid   int64                  `protobuf:"varint,4,opt,name=merchant_uid,json=merchantUid,proto3" json:"merchant_uid,omitempty"`
+	MerchantName  string                 `protobuf:"bytes,5,opt,name=merchant_name,json=merchantName,proto3" json:"merchant_name,omitempty"`
+	UserId        string                 `protobuf:"bytes,6,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Uid           int64                  `protobuf:"varint,7,opt,name=uid,proto3" json:"uid,omitempty"`
+	Amount        int64                  `protobuf:"varint,8,opt,name=amount,proto3" json:"amount,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BanPayPreOrderReq) Reset() {
+	*x = BanPayPreOrderReq{}
+	mi := &file_order_mgr_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BanPayPreOrderReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BanPayPreOrderReq) ProtoMessage() {}
+
+func (x *BanPayPreOrderReq) ProtoReflect() protoreflect.Message {
+	mi := &file_order_mgr_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BanPayPreOrderReq.ProtoReflect.Descriptor instead.
+func (*BanPayPreOrderReq) Descriptor() ([]byte, []int) {
+	return file_order_mgr_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *BanPayPreOrderReq) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *BanPayPreOrderReq) GetOutOrderNo() string {
+	if x != nil {
+		return x.OutOrderNo
+	}
+	return ""
+}
+
+func (x *BanPayPreOrderReq) GetMerchantId() string {
+	if x != nil {
+		return x.MerchantId
+	}
+	return ""
+}
+
+func (x *BanPayPreOrderReq) GetMerchantUid() int64 {
+	if x != nil {
+		return x.MerchantUid
+	}
+	return 0
+}
+
+func (x *BanPayPreOrderReq) GetMerchantName() string {
+	if x != nil {
+		return x.MerchantName
+	}
+	return ""
+}
+
+func (x *BanPayPreOrderReq) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *BanPayPreOrderReq) GetUid() int64 {
+	if x != nil {
+		return x.Uid
+	}
+	return 0
+}
+
+func (x *BanPayPreOrderReq) GetAmount() int64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+type BanPayPreOrderRsp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *BanPayPreOrderRsp) Reset() {
+	*x = BanPayPreOrderRsp{}
+	mi := &file_order_mgr_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *BanPayPreOrderRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*BanPayPreOrderRsp) ProtoMessage() {}
+
+func (x *BanPayPreOrderRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_order_mgr_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use BanPayPreOrderRsp.ProtoReflect.Descriptor instead.
+func (*BanPayPreOrderRsp) Descriptor() ([]byte, []int) {
+	return file_order_mgr_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *BanPayPreOrderRsp) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
 	}
 	return ""
 }
@@ -486,12 +486,10 @@ func (x *CloseOrderReq) GetTransactionId() string {
 }
 
 type CloseOrderRsp struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	TransactionId    string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
-	IsAlreadySuccess int32                  `protobuf:"varint,2,opt,name=is_already_success,json=isAlreadySuccess,proto3" json:"is_already_success,omitempty"`
-	OrderInfo        *OrderInfo             `protobuf:"bytes,3,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *CloseOrderRsp) Reset() {
@@ -529,20 +527,6 @@ func (x *CloseOrderRsp) GetTransactionId() string {
 		return x.TransactionId
 	}
 	return ""
-}
-
-func (x *CloseOrderRsp) GetIsAlreadySuccess() int32 {
-	if x != nil {
-		return x.IsAlreadySuccess
-	}
-	return 0
-}
-
-func (x *CloseOrderRsp) GetOrderInfo() *OrderInfo {
-	if x != nil {
-		return x.OrderInfo
-	}
-	return nil
 }
 
 type QueryOrderReq struct {
@@ -637,20 +621,7 @@ var File_order_mgr_proto protoreflect.FileDescriptor
 
 const file_order_mgr_proto_rawDesc = "" +
 	"\n" +
-	"\x0forder_mgr.proto\x12\torder_mgr\"\x88\x02\n" +
-	"\x11BanPayPreOrderReq\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12 \n" +
-	"\fout_order_no\x18\x02 \x01(\tR\n" +
-	"outOrderNo\x12\x1f\n" +
-	"\vmerchant_id\x18\x03 \x01(\tR\n" +
-	"merchantId\x12!\n" +
-	"\fmerchant_uid\x18\x04 \x01(\x03R\vmerchantUid\x12#\n" +
-	"\rmerchant_name\x18\x05 \x01(\tR\fmerchantName\x12\x17\n" +
-	"\auser_id\x18\x06 \x01(\tR\x06userId\x12\x10\n" +
-	"\x03uid\x18\a \x01(\x03R\x03uid\x12\x16\n" +
-	"\x06amount\x18\b \x01(\x03R\x06amount\":\n" +
-	"\x11BanPayPreOrderRsp\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"\xec\x02\n" +
+	"\x0forder_mgr.proto\x12\torder_mgr\"\xec\x02\n" +
 	"\tOrderInfo\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12 \n" +
 	"\fout_order_no\x18\x02 \x01(\tR\n" +
@@ -666,7 +637,20 @@ const file_order_mgr_proto_rawDesc = "" +
 	"\vtrade_state\x18\n" +
 	" \x01(\x05R\n" +
 	"tradeState\x12.\n" +
-	"\x13order_success_token\x18\v \x01(\tR\x11orderSuccessToken\"\xa5\x02\n" +
+	"\x13order_success_token\x18\v \x01(\tR\x11orderSuccessToken\"\x88\x02\n" +
+	"\x11BanPayPreOrderReq\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12 \n" +
+	"\fout_order_no\x18\x02 \x01(\tR\n" +
+	"outOrderNo\x12\x1f\n" +
+	"\vmerchant_id\x18\x03 \x01(\tR\n" +
+	"merchantId\x12!\n" +
+	"\fmerchant_uid\x18\x04 \x01(\x03R\vmerchantUid\x12#\n" +
+	"\rmerchant_name\x18\x05 \x01(\tR\fmerchantName\x12\x17\n" +
+	"\auser_id\x18\x06 \x01(\tR\x06userId\x12\x10\n" +
+	"\x03uid\x18\a \x01(\x03R\x03uid\x12\x16\n" +
+	"\x06amount\x18\b \x01(\x03R\x06amount\":\n" +
+	"\x11BanPayPreOrderRsp\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"\xa5\x02\n" +
 	"\x15BanPaySuccessOrderReq\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12 \n" +
 	"\fout_order_no\x18\x02 \x01(\tR\n" +
@@ -683,12 +667,9 @@ const file_order_mgr_proto_rawDesc = "" +
 	"\n" +
 	"order_info\x18\x01 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo\"6\n" +
 	"\rCloseOrderReq\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"\x99\x01\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"6\n" +
 	"\rCloseOrderRsp\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12,\n" +
-	"\x12is_already_success\x18\x02 \x01(\x05R\x10isAlreadySuccess\x123\n" +
-	"\n" +
-	"order_info\x18\x03 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo\"6\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"6\n" +
 	"\rQueryOrderReq\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"D\n" +
 	"\rQueryOrderRsp\x123\n" +
@@ -716,9 +697,9 @@ func file_order_mgr_proto_rawDescGZIP() []byte {
 
 var file_order_mgr_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
 var file_order_mgr_proto_goTypes = []any{
-	(*BanPayPreOrderReq)(nil),     // 0: order_mgr.BanPayPreOrderReq
-	(*BanPayPreOrderRsp)(nil),     // 1: order_mgr.BanPayPreOrderRsp
-	(*OrderInfo)(nil),             // 2: order_mgr.OrderInfo
+	(*OrderInfo)(nil),             // 0: order_mgr.OrderInfo
+	(*BanPayPreOrderReq)(nil),     // 1: order_mgr.BanPayPreOrderReq
+	(*BanPayPreOrderRsp)(nil),     // 2: order_mgr.BanPayPreOrderRsp
 	(*BanPaySuccessOrderReq)(nil), // 3: order_mgr.BanPaySuccessOrderReq
 	(*BanPaySuccessOrderRsp)(nil), // 4: order_mgr.BanPaySuccessOrderRsp
 	(*CloseOrderReq)(nil),         // 5: order_mgr.CloseOrderReq
@@ -727,22 +708,21 @@ var file_order_mgr_proto_goTypes = []any{
 	(*QueryOrderRsp)(nil),         // 8: order_mgr.QueryOrderRsp
 }
 var file_order_mgr_proto_depIdxs = []int32{
-	2, // 0: order_mgr.BanPaySuccessOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	2, // 1: order_mgr.CloseOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	2, // 2: order_mgr.QueryOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	0, // 3: order_mgr.OrderMgr.BanPayPreOrder:input_type -> order_mgr.BanPayPreOrderReq
-	3, // 4: order_mgr.OrderMgr.BanPaySuccessOrder:input_type -> order_mgr.BanPaySuccessOrderReq
-	5, // 5: order_mgr.OrderMgr.CloseOrder:input_type -> order_mgr.CloseOrderReq
-	7, // 6: order_mgr.OrderMgr.QueryOrder:input_type -> order_mgr.QueryOrderReq
-	1, // 7: order_mgr.OrderMgr.BanPayPreOrder:output_type -> order_mgr.BanPayPreOrderRsp
-	4, // 8: order_mgr.OrderMgr.BanPaySuccessOrder:output_type -> order_mgr.BanPaySuccessOrderRsp
-	6, // 9: order_mgr.OrderMgr.CloseOrder:output_type -> order_mgr.CloseOrderRsp
-	8, // 10: order_mgr.OrderMgr.QueryOrder:output_type -> order_mgr.QueryOrderRsp
-	7, // [7:11] is the sub-list for method output_type
-	3, // [3:7] is the sub-list for method input_type
-	3, // [3:3] is the sub-list for extension type_name
-	3, // [3:3] is the sub-list for extension extendee
-	0, // [0:3] is the sub-list for field type_name
+	0, // 0: order_mgr.BanPaySuccessOrderRsp.order_info:type_name -> order_mgr.OrderInfo
+	0, // 1: order_mgr.QueryOrderRsp.order_info:type_name -> order_mgr.OrderInfo
+	1, // 2: order_mgr.OrderMgr.BanPayPreOrder:input_type -> order_mgr.BanPayPreOrderReq
+	3, // 3: order_mgr.OrderMgr.BanPaySuccessOrder:input_type -> order_mgr.BanPaySuccessOrderReq
+	5, // 4: order_mgr.OrderMgr.CloseOrder:input_type -> order_mgr.CloseOrderReq
+	7, // 5: order_mgr.OrderMgr.QueryOrder:input_type -> order_mgr.QueryOrderReq
+	2, // 6: order_mgr.OrderMgr.BanPayPreOrder:output_type -> order_mgr.BanPayPreOrderRsp
+	4, // 7: order_mgr.OrderMgr.BanPaySuccessOrder:output_type -> order_mgr.BanPaySuccessOrderRsp
+	6, // 8: order_mgr.OrderMgr.CloseOrder:output_type -> order_mgr.CloseOrderRsp
+	8, // 9: order_mgr.OrderMgr.QueryOrder:output_type -> order_mgr.QueryOrderRsp
+	6, // [6:10] is the sub-list for method output_type
+	2, // [2:6] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_order_mgr_proto_init() }

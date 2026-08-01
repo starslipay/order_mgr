@@ -14,11 +14,10 @@ var (
 	ErrCodeServerInternal = ModuleErrorBase + 1
 
 	// 业务错误码 1000-1999
-	ErrCodeOrderNotFound                        = ModuleErrorBase + 1000
-	ErrCodeOrderAlreadySuccess                  = ModuleErrorBase + 1001
-	ErrCodeOrderAlreadyClosed                   = ModuleErrorBase + 1002
-	ErrCodeOrderTradeStateInvalid               = ModuleErrorBase + 1003
-	ErrCodeOrderDuplicate                       = ModuleErrorBase + 1004
-	ErrCodeInsertCloseOrderButOrderAlreadyExist = ModuleErrorBase + 1005
-	ErrCodeOrderInfoNotMatch                    = ModuleErrorBase + 1006
+	ErrCodeOrderNotFound             = ModuleErrorBase + 1000
+	ErrCodeOrderAlreadySuccess       = ModuleErrorBase + 1001
+	ErrCodeOrderAlreadyClosed        = ModuleErrorBase + 1002
+	ErrCodeOrderTradeStateInvalid    = ModuleErrorBase + 1003
+	ErrCodeOrderInsertOrderDuplicate = ModuleErrorBase + 1004
+	ErrCodeOrderInfoNotMatch         = ModuleErrorBase + 1005
 )

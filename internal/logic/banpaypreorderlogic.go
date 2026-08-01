@@ -81,9 +81,11 @@ func (l *BanPayPreOrderLogic) handleExistingOrder(in *order_mgr_pb.BanPayPreOrde
 				TransactionId: order.TransactionId,
 			}
 		case consts.OrderTradeStateSuccess:
+			// 并发冲突，订单已成功状态，让业务调关补接口重试
 			return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccess, "order already success")
 
 		case consts.OrderTradeStateClose:
+			// 并发冲突，订单已关闭状态，让业务调关补接口重试
 			return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadyClosed, "order already closed")
 
 		default:
@@ -118,7 +120,8 @@ func (l *BanPayPreOrderLogic) handleNewOrder(in *order_mgr_pb.BanPayPreOrderReq)
 	_, err := l.svcCtx.TOrderModelMaster.Insert(l.ctx, order)
 	if err != nil {
 		if isDuplicateKeyError(err) {
-			return nil, xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderDuplicate, "insert order, order already exists")
+			// 并发冲突，订单已存在，让业务调关补接口重试
+			return nil, xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderInsertOrderDuplicate, "insert order, order already exists")
 		}
 		return nil, xerror.NewBizError(codes.Internal, xerr.ErrCodeDB, err.Error())
 	}

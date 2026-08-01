@@ -55,8 +55,6 @@ message CloseOrderReq {
 
 message CloseOrderRsp {
     string transaction_id = 1;
-    int32 is_already_success = 2;
-    OrderInfo order_info = 3;
 }
 
 message QueryOrderReq {

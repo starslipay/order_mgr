@@ -5,7 +5,6 @@ import (
 
 	"github.com/starslipay/order_mgr/internal/consts"
 	"github.com/starslipay/order_mgr/internal/svc"
-	"github.com/starslipay/order_mgr/internal/util"
 	"github.com/starslipay/order_mgr/internal/xerr"
 	"github.com/starslipay/order_mgr/model/mysql"
 	"github.com/starslipay/order_mgr/order_mgr_pb"
@@ -55,6 +54,7 @@ func (l *CloseOrderLogic) closeExistingOrder(in *order_mgr_pb.CloseOrderReq) (*o
 		order, err := model.FindOneForUpdate(ctx, in.TransactionId)
 		if err != nil {
 			if err == mysql.ErrNotFound {
+				// 理论上不应该发生，因为订单存在时才会调用此方法
 				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderNotFound, "order not found for update")
 			}
 			return xerror.NewBizError(codes.Internal, xerr.ErrCodeDB, err.Error())
@@ -70,36 +70,18 @@ func (l *CloseOrderLogic) closeExistingOrder(in *order_mgr_pb.CloseOrderReq) (*o
 			}
 
 			rsp = &order_mgr_pb.CloseOrderRsp{
-				TransactionId:    order.TransactionId,
-				IsAlreadySuccess: 0,
+				TransactionId: order.TransactionId,
 			}
 
 		case consts.OrderTradeStateClose:
 			// 已关单：直接返回成功（幂等）
 			rsp = &order_mgr_pb.CloseOrderRsp{
-				TransactionId:    order.TransactionId,
-				IsAlreadySuccess: 0,
+				TransactionId: order.TransactionId,
 			}
 
 		case consts.OrderTradeStateSuccess:
-			// 校验关键信息一致性
-			orderSuccessToken := util.GenOrderSuccessToken(order.TransactionId, order.OutOrderNo,
-				order.MerchantUid, order.Uid, order.Amount)
-
-			rsp = &order_mgr_pb.CloseOrderRsp{
-				OrderInfo: &order_mgr_pb.OrderInfo{
-					TransactionId:     order.TransactionId,
-					OutOrderNo:        order.OutOrderNo,
-					MerchantId:        order.MerchantId,
-					MerchantUid:       order.MerchantUid,
-					UserId:            order.UserId,
-					Uid:               order.Uid,
-					Amount:            order.Amount,
-					PayTime:           order.PayTime.Format("2006-01-02 15:04:05"),
-					TradeState:        int32(order.TradeState),
-					OrderSuccessToken: orderSuccessToken,
-				},
-			}
+			// 并发错误：订单已成功状态, 让业务重试
+			return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderAlreadySuccess, "order already success")
 
 		default:
 			return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "order trade state invalid")
@@ -125,13 +107,13 @@ func (l *CloseOrderLogic) closeNonExistOrder(in *order_mgr_pb.CloseOrderReq) (*o
 	if err != nil {
 		// 并发场景：其他线程已插入同一订单（唯一键冲突）
 		if isDuplicateKeyError(err) {
-			return nil, xerror.NewBizError(codes.Internal, xerr.ErrCodeInsertCloseOrderButOrderAlreadyExist, "insert close order, order already exist")
+			// 并发冲突，无单关单订单已存在，让业务调关补接口重试
+			return nil, xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderInsertOrderDuplicate, "insert close order, order already exist")
 		}
 		return nil, xerror.NewBizError(codes.Internal, xerr.ErrCodeDB, err.Error())
 	}
 
 	return &order_mgr_pb.CloseOrderRsp{
-		TransactionId:    order.TransactionId,
-		IsAlreadySuccess: 0,
+		TransactionId: order.TransactionId,
 	}, nil
 }
