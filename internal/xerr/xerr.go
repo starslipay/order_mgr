@@ -20,4 +20,5 @@ var (
 	ErrCodeOrderTradeStateInvalid    = ModuleErrorBase + 1003
 	ErrCodeOrderInsertOrderDuplicate = ModuleErrorBase + 1004
 	ErrCodeOrderInfoNotMatch         = ModuleErrorBase + 1005
+	ErrCodeCheckDeductToken          = ModuleErrorBase + 1006
 )

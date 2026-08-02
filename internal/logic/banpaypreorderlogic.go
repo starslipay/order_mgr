@@ -112,6 +112,7 @@ func (l *BanPayPreOrderLogic) handleNewOrder(in *order_mgr_pb.BanPayPreOrderReq)
 		UserId:        in.UserId,
 		Uid:           in.Uid,
 		Amount:        in.Amount,
+		CurType:       consts.OrderCurTypeCNY,
 		PayType:       consts.OrderPayTypeBanPay,
 		TradeState:    consts.OrderTradeStateInit,
 		PayTime:       time.Now(), // 新建时，默认支付时间为当前时间

@@ -52,6 +52,7 @@ func (l *QueryOrderLogic) QueryOrder(in *order_mgr_pb.QueryOrderReq) (*order_mgr
 		TradeState:    int32(order.TradeState),
 	}
 
+	// 如果订单状态为成功，生成订单成功凭证
 	if consts.OrderTradeStateSuccess == order.TradeState {
 		orderInfo.OrderSuccessToken = util.GenOrderSuccessToken(order.TransactionId, order.OutOrderNo,
 			order.MerchantUid, order.Uid, order.Amount)

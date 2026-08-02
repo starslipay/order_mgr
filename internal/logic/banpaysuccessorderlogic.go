@@ -76,6 +76,12 @@ func (l *BanPaySuccessOrderLogic) BanPaySuccessOrder(in *order_mgr_pb.BanPaySucc
 				return err
 			}
 
+			// 校验扣款token
+			err = util.CheckC2BDeductToken(order.TransactionId, order.MerchantUid, order.Uid, order.Amount, in.DeductToken)
+			if err != nil {
+				return err
+			}
+
 			payTime, err := util.ParseBeijingTime(in.PayTime)
 			if err != nil {
 				return xerror.NewBizError(codes.Internal, xerr.ErrCodeOrderTradeStateInvalid, "pay time format error")
