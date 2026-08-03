@@ -13,3 +13,9 @@ MasterDBConfig:
 SlaveDBConfig:
   # DataSource: starslipay:payClipayA2026@tcp(mysql-slave.pay-ns.svc.cluster.local:3306)/account_db?charset=utf8mb4&parseTime=True&loc=Local&timeout=5s&readTimeout=10s&writeTimeout=10s #K8S
   DataSource: root:root123456@tcp(mysql8:3306)/order_db?charset=utf8mb4&parseTime=True&loc=Local&timeout=5s&readTimeout=10s&writeTimeout=10s # 本地开发环境
+
+# Prometheus 指标采集：go-zero 会另起一个独立 HTTP 端口暴露 /metrics
+Prometheus:
+  Host: 0.0.0.0
+  Port: 9090
+  Path: /metrics
