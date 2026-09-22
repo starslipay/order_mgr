@@ -29,8 +29,8 @@ CREATE TABLE `t_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- linux:  mysql -h 127.0.0.1 -P 3306 -u root -proot123456 < user_init.sql
--- windows: Get-Content -Encoding UTF8 user_init.sql | mysql -h 127.0.0.1 -P 3306 -u root -proot123456
+-- linux:  mysql -h 127.0.0.1 -P 3306 -u root -proot123456 < order_init.sql
+-- windows: Get-Content -Encoding UTF8 order_init.sql | mysql -h 127.0.0.1 -P 3306 -u root -proot123456
 -- 只读权限 multipass exec master1 -- sudo kubectl exec -it -n pay-ns mysql-0 -- mysql -ustarslipay -ppayClipayA2026
 -- root权限 multipass exec master1 -- sudo kubectl exec -it -n pay-ns mysql-0 -- mysql -uroot -proot123456
 
