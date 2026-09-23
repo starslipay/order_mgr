@@ -5,7 +5,7 @@ package xerr
 // 错误码 = 模块id + 业务错误码
 var (
 	ModuleId        = int64(455906)
-	ModuleErrorBase = ModuleId * 10000
+	ModuleErrorBase = ModuleId * 100
 )
 
 var (
@@ -14,11 +14,11 @@ var (
 	ErrCodeServerInternal = ModuleErrorBase + 1
 
 	// 业务错误码 1000-1999
-	ErrCodeOrderNotFound             = ModuleErrorBase + 1000
-	ErrCodeOrderAlreadySuccess       = ModuleErrorBase + 1001
-	ErrCodeOrderAlreadyClosed        = ModuleErrorBase + 1002
-	ErrCodeOrderTradeStateInvalid    = ModuleErrorBase + 1003
-	ErrCodeOrderInsertOrderDuplicate = ModuleErrorBase + 1004
-	ErrCodeOrderInfoNotMatch         = ModuleErrorBase + 1005
-	ErrCodeCheckDeductToken          = ModuleErrorBase + 1006
+	ErrCodeOrderNotFound             = ModuleErrorBase + 100
+	ErrCodeOrderAlreadySuccess       = ModuleErrorBase + 101
+	ErrCodeOrderAlreadyClosed        = ModuleErrorBase + 102
+	ErrCodeOrderTradeStateInvalid    = ModuleErrorBase + 103
+	ErrCodeOrderInsertOrderDuplicate = ModuleErrorBase + 104
+	ErrCodeOrderInfoNotMatch         = ModuleErrorBase + 105
+	ErrCodeCheckDeductToken          = ModuleErrorBase + 106
 )
