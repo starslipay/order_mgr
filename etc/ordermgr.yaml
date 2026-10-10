@@ -3,7 +3,9 @@ ListenOn: 0.0.0.0:8080
 Timeout: 10000
 Etcd:
   Hosts:
-  - etcd:2379
+  - etcd:2379  # etcd 集群节点1
+  - etcd2:2379 # etcd 集群节点2, 任一节点可用即可
+  - etcd3:2379 # etcd 集群节点3
   Key: ordermgr.rpc
 Middlewares:
   Breaker: false  # 关闭服务端熔断
