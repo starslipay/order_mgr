@@ -42,3 +42,8 @@ func (s *OrderMgrServer) QueryOrder(ctx context.Context, in *order_mgr_pb.QueryO
 	l := logic.NewQueryOrderLogic(ctx, s.svcCtx)
 	return l.QueryOrder(in)
 }
+
+func (s *OrderMgrServer) RefundOrder(ctx context.Context, in *order_mgr_pb.RefundOrderReq) (*order_mgr_pb.RefundOrderRsp, error) {
+	l := logic.NewRefundOrderLogic(ctx, s.svcCtx)
+	return l.RefundOrder(in)
+}

@@ -23,12 +23,15 @@ type (
 	OrderInfo             = order_mgr_pb.OrderInfo
 	QueryOrderReq         = order_mgr_pb.QueryOrderReq
 	QueryOrderRsp         = order_mgr_pb.QueryOrderRsp
+	RefundOrderReq        = order_mgr_pb.RefundOrderReq
+	RefundOrderRsp        = order_mgr_pb.RefundOrderRsp
 
 	OrderMgr interface {
 		BanPayPreOrder(ctx context.Context, in *BanPayPreOrderReq, opts ...grpc.CallOption) (*BanPayPreOrderRsp, error)
 		BanPaySuccessOrder(ctx context.Context, in *BanPaySuccessOrderReq, opts ...grpc.CallOption) (*BanPaySuccessOrderRsp, error)
 		CloseOrder(ctx context.Context, in *CloseOrderReq, opts ...grpc.CallOption) (*CloseOrderRsp, error)
 		QueryOrder(ctx context.Context, in *QueryOrderReq, opts ...grpc.CallOption) (*QueryOrderRsp, error)
+		RefundOrder(ctx context.Context, in *RefundOrderReq, opts ...grpc.CallOption) (*RefundOrderRsp, error)
 	}
 
 	defaultOrderMgr struct {
@@ -60,4 +63,9 @@ func (m *defaultOrderMgr) CloseOrder(ctx context.Context, in *CloseOrderReq, opt
 func (m *defaultOrderMgr) QueryOrder(ctx context.Context, in *QueryOrderReq, opts ...grpc.CallOption) (*QueryOrderRsp, error) {
 	client := order_mgr_pb.NewOrderMgrClient(m.cli.Conn())
 	return client.QueryOrder(ctx, in, opts...)
+}
+
+func (m *defaultOrderMgr) RefundOrder(ctx context.Context, in *RefundOrderReq, opts ...grpc.CallOption) (*RefundOrderRsp, error) {
+	client := order_mgr_pb.NewOrderMgrClient(m.cli.Conn())
+	return client.RefundOrder(ctx, in, opts...)
 }

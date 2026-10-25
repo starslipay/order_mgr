@@ -23,6 +23,7 @@ const (
 	OrderMgr_BanPaySuccessOrder_FullMethodName = "/order_mgr.OrderMgr/BanPaySuccessOrder"
 	OrderMgr_CloseOrder_FullMethodName         = "/order_mgr.OrderMgr/CloseOrder"
 	OrderMgr_QueryOrder_FullMethodName         = "/order_mgr.OrderMgr/QueryOrder"
+	OrderMgr_RefundOrder_FullMethodName        = "/order_mgr.OrderMgr/RefundOrder"
 )
 
 // OrderMgrClient is the client API for OrderMgr service.
@@ -33,6 +34,7 @@ type OrderMgrClient interface {
 	BanPaySuccessOrder(ctx context.Context, in *BanPaySuccessOrderReq, opts ...grpc.CallOption) (*BanPaySuccessOrderRsp, error)
 	CloseOrder(ctx context.Context, in *CloseOrderReq, opts ...grpc.CallOption) (*CloseOrderRsp, error)
 	QueryOrder(ctx context.Context, in *QueryOrderReq, opts ...grpc.CallOption) (*QueryOrderRsp, error)
+	RefundOrder(ctx context.Context, in *RefundOrderReq, opts ...grpc.CallOption) (*RefundOrderRsp, error)
 }
 
 type orderMgrClient struct {
@@ -83,6 +85,16 @@ func (c *orderMgrClient) QueryOrder(ctx context.Context, in *QueryOrderReq, opts
 	return out, nil
 }
 
+func (c *orderMgrClient) RefundOrder(ctx context.Context, in *RefundOrderReq, opts ...grpc.CallOption) (*RefundOrderRsp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(RefundOrderRsp)
+	err := c.cc.Invoke(ctx, OrderMgr_RefundOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderMgrServer is the server API for OrderMgr service.
 // All implementations must embed UnimplementedOrderMgrServer
 // for forward compatibility.
@@ -91,6 +103,7 @@ type OrderMgrServer interface {
 	BanPaySuccessOrder(context.Context, *BanPaySuccessOrderReq) (*BanPaySuccessOrderRsp, error)
 	CloseOrder(context.Context, *CloseOrderReq) (*CloseOrderRsp, error)
 	QueryOrder(context.Context, *QueryOrderReq) (*QueryOrderRsp, error)
+	RefundOrder(context.Context, *RefundOrderReq) (*RefundOrderRsp, error)
 	mustEmbedUnimplementedOrderMgrServer()
 }
 
@@ -112,6 +125,9 @@ func (UnimplementedOrderMgrServer) CloseOrder(context.Context, *CloseOrderReq) (
 }
 func (UnimplementedOrderMgrServer) QueryOrder(context.Context, *QueryOrderReq) (*QueryOrderRsp, error) {
 	return nil, status.Error(codes.Unimplemented, "method QueryOrder not implemented")
+}
+func (UnimplementedOrderMgrServer) RefundOrder(context.Context, *RefundOrderReq) (*RefundOrderRsp, error) {
+	return nil, status.Error(codes.Unimplemented, "method RefundOrder not implemented")
 }
 func (UnimplementedOrderMgrServer) mustEmbedUnimplementedOrderMgrServer() {}
 func (UnimplementedOrderMgrServer) testEmbeddedByValue()                  {}
@@ -206,6 +222,24 @@ func _OrderMgr_QueryOrder_Handler(srv interface{}, ctx context.Context, dec func
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderMgr_RefundOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RefundOrderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderMgrServer).RefundOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderMgr_RefundOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderMgrServer).RefundOrder(ctx, req.(*RefundOrderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderMgr_ServiceDesc is the grpc.ServiceDesc for OrderMgr service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -228,6 +262,10 @@ var OrderMgr_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryOrder",
 			Handler:    _OrderMgr_QueryOrder_Handler,
+		},
+		{
+			MethodName: "RefundOrder",
+			Handler:    _OrderMgr_RefundOrder_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

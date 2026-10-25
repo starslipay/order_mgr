@@ -617,6 +617,104 @@ func (x *QueryOrderRsp) GetOrderInfo() *OrderInfo {
 	return nil
 }
 
+// 退款请求
+type RefundOrderReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	RefundTime    string                 `protobuf:"bytes,2,opt,name=refund_time,json=refundTime,proto3" json:"refund_time,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RefundOrderReq) Reset() {
+	*x = RefundOrderReq{}
+	mi := &file_order_mgr_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RefundOrderReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RefundOrderReq) ProtoMessage() {}
+
+func (x *RefundOrderReq) ProtoReflect() protoreflect.Message {
+	mi := &file_order_mgr_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RefundOrderReq.ProtoReflect.Descriptor instead.
+func (*RefundOrderReq) Descriptor() ([]byte, []int) {
+	return file_order_mgr_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *RefundOrderReq) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *RefundOrderReq) GetRefundTime() string {
+	if x != nil {
+		return x.RefundTime
+	}
+	return ""
+}
+
+// 退款响应
+type RefundOrderRsp struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RefundOrderRsp) Reset() {
+	*x = RefundOrderRsp{}
+	mi := &file_order_mgr_proto_msgTypes[10]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RefundOrderRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RefundOrderRsp) ProtoMessage() {}
+
+func (x *RefundOrderRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_order_mgr_proto_msgTypes[10]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RefundOrderRsp.ProtoReflect.Descriptor instead.
+func (*RefundOrderRsp) Descriptor() ([]byte, []int) {
+	return file_order_mgr_proto_rawDescGZIP(), []int{10}
+}
+
+func (x *RefundOrderRsp) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
 var File_order_mgr_proto protoreflect.FileDescriptor
 
 const file_order_mgr_proto_rawDesc = "" +
@@ -674,14 +772,21 @@ const file_order_mgr_proto_rawDesc = "" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"D\n" +
 	"\rQueryOrderRsp\x123\n" +
 	"\n" +
-	"order_info\x18\x01 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo2\xb6\x02\n" +
+	"order_info\x18\x01 \x01(\v2\x14.order_mgr.OrderInfoR\torderInfo\"X\n" +
+	"\x0eRefundOrderReq\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x12\x1f\n" +
+	"\vrefund_time\x18\x02 \x01(\tR\n" +
+	"refundTime\"7\n" +
+	"\x0eRefundOrderRsp\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId2\xfb\x02\n" +
 	"\bOrderMgr\x12L\n" +
 	"\x0eBanPayPreOrder\x12\x1c.order_mgr.BanPayPreOrderReq\x1a\x1c.order_mgr.BanPayPreOrderRsp\x12X\n" +
 	"\x12BanPaySuccessOrder\x12 .order_mgr.BanPaySuccessOrderReq\x1a .order_mgr.BanPaySuccessOrderRsp\x12@\n" +
 	"\n" +
 	"CloseOrder\x12\x18.order_mgr.CloseOrderReq\x1a\x18.order_mgr.CloseOrderRsp\x12@\n" +
 	"\n" +
-	"QueryOrder\x12\x18.order_mgr.QueryOrderReq\x1a\x18.order_mgr.QueryOrderRspB\x10Z\x0e./order_mgr_pbb\x06proto3"
+	"QueryOrder\x12\x18.order_mgr.QueryOrderReq\x1a\x18.order_mgr.QueryOrderRsp\x12C\n" +
+	"\vRefundOrder\x12\x19.order_mgr.RefundOrderReq\x1a\x19.order_mgr.RefundOrderRspB\x10Z\x0e./order_mgr_pbb\x06proto3"
 
 var (
 	file_order_mgr_proto_rawDescOnce sync.Once
@@ -695,7 +800,7 @@ func file_order_mgr_proto_rawDescGZIP() []byte {
 	return file_order_mgr_proto_rawDescData
 }
 
-var file_order_mgr_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_order_mgr_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
 var file_order_mgr_proto_goTypes = []any{
 	(*OrderInfo)(nil),             // 0: order_mgr.OrderInfo
 	(*BanPayPreOrderReq)(nil),     // 1: order_mgr.BanPayPreOrderReq
@@ -706,23 +811,27 @@ var file_order_mgr_proto_goTypes = []any{
 	(*CloseOrderRsp)(nil),         // 6: order_mgr.CloseOrderRsp
 	(*QueryOrderReq)(nil),         // 7: order_mgr.QueryOrderReq
 	(*QueryOrderRsp)(nil),         // 8: order_mgr.QueryOrderRsp
+	(*RefundOrderReq)(nil),        // 9: order_mgr.RefundOrderReq
+	(*RefundOrderRsp)(nil),        // 10: order_mgr.RefundOrderRsp
 }
 var file_order_mgr_proto_depIdxs = []int32{
-	0, // 0: order_mgr.BanPaySuccessOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	0, // 1: order_mgr.QueryOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	1, // 2: order_mgr.OrderMgr.BanPayPreOrder:input_type -> order_mgr.BanPayPreOrderReq
-	3, // 3: order_mgr.OrderMgr.BanPaySuccessOrder:input_type -> order_mgr.BanPaySuccessOrderReq
-	5, // 4: order_mgr.OrderMgr.CloseOrder:input_type -> order_mgr.CloseOrderReq
-	7, // 5: order_mgr.OrderMgr.QueryOrder:input_type -> order_mgr.QueryOrderReq
-	2, // 6: order_mgr.OrderMgr.BanPayPreOrder:output_type -> order_mgr.BanPayPreOrderRsp
-	4, // 7: order_mgr.OrderMgr.BanPaySuccessOrder:output_type -> order_mgr.BanPaySuccessOrderRsp
-	6, // 8: order_mgr.OrderMgr.CloseOrder:output_type -> order_mgr.CloseOrderRsp
-	8, // 9: order_mgr.OrderMgr.QueryOrder:output_type -> order_mgr.QueryOrderRsp
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	0,  // 0: order_mgr.BanPaySuccessOrderRsp.order_info:type_name -> order_mgr.OrderInfo
+	0,  // 1: order_mgr.QueryOrderRsp.order_info:type_name -> order_mgr.OrderInfo
+	1,  // 2: order_mgr.OrderMgr.BanPayPreOrder:input_type -> order_mgr.BanPayPreOrderReq
+	3,  // 3: order_mgr.OrderMgr.BanPaySuccessOrder:input_type -> order_mgr.BanPaySuccessOrderReq
+	5,  // 4: order_mgr.OrderMgr.CloseOrder:input_type -> order_mgr.CloseOrderReq
+	7,  // 5: order_mgr.OrderMgr.QueryOrder:input_type -> order_mgr.QueryOrderReq
+	9,  // 6: order_mgr.OrderMgr.RefundOrder:input_type -> order_mgr.RefundOrderReq
+	2,  // 7: order_mgr.OrderMgr.BanPayPreOrder:output_type -> order_mgr.BanPayPreOrderRsp
+	4,  // 8: order_mgr.OrderMgr.BanPaySuccessOrder:output_type -> order_mgr.BanPaySuccessOrderRsp
+	6,  // 9: order_mgr.OrderMgr.CloseOrder:output_type -> order_mgr.CloseOrderRsp
+	8,  // 10: order_mgr.OrderMgr.QueryOrder:output_type -> order_mgr.QueryOrderRsp
+	10, // 11: order_mgr.OrderMgr.RefundOrder:output_type -> order_mgr.RefundOrderRsp
+	7,  // [7:12] is the sub-list for method output_type
+	2,  // [2:7] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_order_mgr_proto_init() }
@@ -736,7 +845,7 @@ func file_order_mgr_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_order_mgr_proto_rawDesc), len(file_order_mgr_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   11,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

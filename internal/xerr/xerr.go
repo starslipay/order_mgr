@@ -20,4 +20,5 @@ var (
 	ErrCodeOrderInsertOrderDuplicate = int64(455906104)
 	ErrCodeOrderInfoNotMatch         = int64(455906105)
 	ErrCodeCheckDeductToken          = int64(455906106)
+	ErrCodeOrderAlreadyRefunded      = int64(455906107)
 )

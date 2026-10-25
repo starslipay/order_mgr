@@ -65,9 +65,21 @@ message QueryOrderRsp {
     OrderInfo order_info = 1;
 }
 
+// 退款请求
+message RefundOrderReq {
+    string transaction_id = 1;
+    string refund_time = 2;
+}
+
+// 退款响应
+message RefundOrderRsp {
+    string transaction_id = 1;
+}
+
 service OrderMgr {    
     rpc BanPayPreOrder(BanPayPreOrderReq) returns (BanPayPreOrderRsp);
     rpc BanPaySuccessOrder(BanPaySuccessOrderReq) returns (BanPaySuccessOrderRsp);
     rpc CloseOrder(CloseOrderReq) returns (CloseOrderRsp);
     rpc QueryOrder(QueryOrderReq) returns (QueryOrderRsp);
+    rpc RefundOrder(RefundOrderReq) returns (RefundOrderRsp);
 }
