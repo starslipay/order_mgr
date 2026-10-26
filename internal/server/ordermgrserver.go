@@ -47,3 +47,13 @@ func (s *OrderMgrServer) RefundOrder(ctx context.Context, in *order_mgr_pb.Refun
 	l := logic.NewRefundOrderLogic(ctx, s.svcCtx)
 	return l.RefundOrder(in)
 }
+
+func (s *OrderMgrServer) CreateRechargeWithdrawOrder(ctx context.Context, in *order_mgr_pb.CreateRechargeWithdrawOrderReq) (*order_mgr_pb.CreateRechargeWithdrawOrderRsp, error) {
+	l := logic.NewCreateRechargeWithdrawOrderLogic(ctx, s.svcCtx)
+	return l.CreateRechargeWithdrawOrder(in)
+}
+
+func (s *OrderMgrServer) UpdateRechargeWithdrawOrderState(ctx context.Context, in *order_mgr_pb.UpdateRechargeWithdrawOrderStateReq) (*order_mgr_pb.UpdateRechargeWithdrawOrderStateRsp, error) {
+	l := logic.NewUpdateRechargeWithdrawOrderStateLogic(ctx, s.svcCtx)
+	return l.UpdateRechargeWithdrawOrderState(in)
+}

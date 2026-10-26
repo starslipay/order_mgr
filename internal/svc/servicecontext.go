@@ -12,11 +12,13 @@ import (
 )
 
 type ServiceContext struct {
-	Config            config.Config
-	SqlMasterConn     sqlx.SqlConn
-	SqlSlaveConn      sqlx.SqlConn
-	TOrderModelMaster mysql.TOrderModel
-	TOrderModelSlave  mysql.TOrderModel
+	Config                            config.Config
+	SqlMasterConn                     sqlx.SqlConn
+	SqlSlaveConn                      sqlx.SqlConn
+	TOrderModelMaster                 mysql.TOrderModel
+	TOrderModelSlave                  mysql.TOrderModel
+	TRechargeWithdrawOrderModelMaster mysql.TRechargeWithdrawOrderModel
+	TRechargeWithdrawOrderModelSlave  mysql.TRechargeWithdrawOrderModel
 }
 
 // newDBConn 自建 *sql.DB 以支持自定义连接池参数
@@ -42,10 +44,12 @@ func NewServiceContext(c config.Config) *ServiceContext {
 		c.SlaveDBConfig.MaxOpenConns, c.SlaveDBConfig.MaxIdleConns, c.SlaveDBConfig.ConnMaxLifetimeSec)
 
 	return &ServiceContext{
-		Config:            c,
-		SqlMasterConn:     SqlMasterConn,
-		SqlSlaveConn:      SqlSlaveConn,
-		TOrderModelMaster: mysql.NewTOrderModel(SqlMasterConn),
-		TOrderModelSlave:  mysql.NewTOrderModel(SqlSlaveConn),
+		Config:                            c,
+		SqlMasterConn:                     SqlMasterConn,
+		SqlSlaveConn:                      SqlSlaveConn,
+		TOrderModelMaster:                 mysql.NewTOrderModel(SqlMasterConn),
+		TOrderModelSlave:                  mysql.NewTOrderModel(SqlSlaveConn),
+		TRechargeWithdrawOrderModelMaster: mysql.NewTRechargeWithdrawOrderModel(SqlMasterConn),
+		TRechargeWithdrawOrderModelSlave:  mysql.NewTRechargeWithdrawOrderModel(SqlSlaveConn),
 	}
 }

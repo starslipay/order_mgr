@@ -19,11 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	OrderMgr_BanPayPreOrder_FullMethodName     = "/order_mgr.OrderMgr/BanPayPreOrder"
-	OrderMgr_BanPaySuccessOrder_FullMethodName = "/order_mgr.OrderMgr/BanPaySuccessOrder"
-	OrderMgr_CloseOrder_FullMethodName         = "/order_mgr.OrderMgr/CloseOrder"
-	OrderMgr_QueryOrder_FullMethodName         = "/order_mgr.OrderMgr/QueryOrder"
-	OrderMgr_RefundOrder_FullMethodName        = "/order_mgr.OrderMgr/RefundOrder"
+	OrderMgr_BanPayPreOrder_FullMethodName                   = "/order_mgr.OrderMgr/BanPayPreOrder"
+	OrderMgr_BanPaySuccessOrder_FullMethodName               = "/order_mgr.OrderMgr/BanPaySuccessOrder"
+	OrderMgr_CloseOrder_FullMethodName                       = "/order_mgr.OrderMgr/CloseOrder"
+	OrderMgr_QueryOrder_FullMethodName                       = "/order_mgr.OrderMgr/QueryOrder"
+	OrderMgr_RefundOrder_FullMethodName                      = "/order_mgr.OrderMgr/RefundOrder"
+	OrderMgr_CreateRechargeWithdrawOrder_FullMethodName      = "/order_mgr.OrderMgr/CreateRechargeWithdrawOrder"
+	OrderMgr_UpdateRechargeWithdrawOrderState_FullMethodName = "/order_mgr.OrderMgr/UpdateRechargeWithdrawOrderState"
 )
 
 // OrderMgrClient is the client API for OrderMgr service.
@@ -35,6 +37,10 @@ type OrderMgrClient interface {
 	CloseOrder(ctx context.Context, in *CloseOrderReq, opts ...grpc.CallOption) (*CloseOrderRsp, error)
 	QueryOrder(ctx context.Context, in *QueryOrderReq, opts ...grpc.CallOption) (*QueryOrderRsp, error)
 	RefundOrder(ctx context.Context, in *RefundOrderReq, opts ...grpc.CallOption) (*RefundOrderRsp, error)
+	// 创建充值提现单(初始状态)
+	CreateRechargeWithdrawOrder(ctx context.Context, in *CreateRechargeWithdrawOrderReq, opts ...grpc.CallOption) (*CreateRechargeWithdrawOrderRsp, error)
+	// 更新充值提现单状态(成功/失败)
+	UpdateRechargeWithdrawOrderState(ctx context.Context, in *UpdateRechargeWithdrawOrderStateReq, opts ...grpc.CallOption) (*UpdateRechargeWithdrawOrderStateRsp, error)
 }
 
 type orderMgrClient struct {
@@ -95,6 +101,26 @@ func (c *orderMgrClient) RefundOrder(ctx context.Context, in *RefundOrderReq, op
 	return out, nil
 }
 
+func (c *orderMgrClient) CreateRechargeWithdrawOrder(ctx context.Context, in *CreateRechargeWithdrawOrderReq, opts ...grpc.CallOption) (*CreateRechargeWithdrawOrderRsp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CreateRechargeWithdrawOrderRsp)
+	err := c.cc.Invoke(ctx, OrderMgr_CreateRechargeWithdrawOrder_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *orderMgrClient) UpdateRechargeWithdrawOrderState(ctx context.Context, in *UpdateRechargeWithdrawOrderStateReq, opts ...grpc.CallOption) (*UpdateRechargeWithdrawOrderStateRsp, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(UpdateRechargeWithdrawOrderStateRsp)
+	err := c.cc.Invoke(ctx, OrderMgr_UpdateRechargeWithdrawOrderState_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // OrderMgrServer is the server API for OrderMgr service.
 // All implementations must embed UnimplementedOrderMgrServer
 // for forward compatibility.
@@ -104,6 +130,10 @@ type OrderMgrServer interface {
 	CloseOrder(context.Context, *CloseOrderReq) (*CloseOrderRsp, error)
 	QueryOrder(context.Context, *QueryOrderReq) (*QueryOrderRsp, error)
 	RefundOrder(context.Context, *RefundOrderReq) (*RefundOrderRsp, error)
+	// 创建充值提现单(初始状态)
+	CreateRechargeWithdrawOrder(context.Context, *CreateRechargeWithdrawOrderReq) (*CreateRechargeWithdrawOrderRsp, error)
+	// 更新充值提现单状态(成功/失败)
+	UpdateRechargeWithdrawOrderState(context.Context, *UpdateRechargeWithdrawOrderStateReq) (*UpdateRechargeWithdrawOrderStateRsp, error)
 	mustEmbedUnimplementedOrderMgrServer()
 }
 
@@ -128,6 +158,12 @@ func (UnimplementedOrderMgrServer) QueryOrder(context.Context, *QueryOrderReq) (
 }
 func (UnimplementedOrderMgrServer) RefundOrder(context.Context, *RefundOrderReq) (*RefundOrderRsp, error) {
 	return nil, status.Error(codes.Unimplemented, "method RefundOrder not implemented")
+}
+func (UnimplementedOrderMgrServer) CreateRechargeWithdrawOrder(context.Context, *CreateRechargeWithdrawOrderReq) (*CreateRechargeWithdrawOrderRsp, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateRechargeWithdrawOrder not implemented")
+}
+func (UnimplementedOrderMgrServer) UpdateRechargeWithdrawOrderState(context.Context, *UpdateRechargeWithdrawOrderStateReq) (*UpdateRechargeWithdrawOrderStateRsp, error) {
+	return nil, status.Error(codes.Unimplemented, "method UpdateRechargeWithdrawOrderState not implemented")
 }
 func (UnimplementedOrderMgrServer) mustEmbedUnimplementedOrderMgrServer() {}
 func (UnimplementedOrderMgrServer) testEmbeddedByValue()                  {}
@@ -240,6 +276,42 @@ func _OrderMgr_RefundOrder_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _OrderMgr_CreateRechargeWithdrawOrder_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateRechargeWithdrawOrderReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderMgrServer).CreateRechargeWithdrawOrder(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderMgr_CreateRechargeWithdrawOrder_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderMgrServer).CreateRechargeWithdrawOrder(ctx, req.(*CreateRechargeWithdrawOrderReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _OrderMgr_UpdateRechargeWithdrawOrderState_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateRechargeWithdrawOrderStateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(OrderMgrServer).UpdateRechargeWithdrawOrderState(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: OrderMgr_UpdateRechargeWithdrawOrderState_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(OrderMgrServer).UpdateRechargeWithdrawOrderState(ctx, req.(*UpdateRechargeWithdrawOrderStateReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // OrderMgr_ServiceDesc is the grpc.ServiceDesc for OrderMgr service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +338,14 @@ var OrderMgr_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RefundOrder",
 			Handler:    _OrderMgr_RefundOrder_Handler,
+		},
+		{
+			MethodName: "CreateRechargeWithdrawOrder",
+			Handler:    _OrderMgr_CreateRechargeWithdrawOrder_Handler,
+		},
+		{
+			MethodName: "UpdateRechargeWithdrawOrderState",
+			Handler:    _OrderMgr_UpdateRechargeWithdrawOrderState_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

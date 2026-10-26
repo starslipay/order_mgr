@@ -14,3 +14,14 @@ const (
 const (
 	OrderCurTypeCNY = 1 // 人民币
 )
+
+const (
+	RechargeWithdrawOrderTypeRecharge = 1 // 充值(Bank2C)
+	RechargeWithdrawOrderTypeWithdraw = 2 // 提现(C2Bank)
+)
+
+const (
+	RechargeWithdrawTradeStateInit    = 1 // 初始状态
+	RechargeWithdrawTradeStateSuccess = 2 // 成功
+	RechargeWithdrawTradeStateFail    = 3 // 失败
+)
