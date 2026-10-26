@@ -76,13 +76,29 @@ message RefundOrderRsp {
     string transaction_id = 1;
 }
 
+// 充值提现单信息
+message RechargeWithdrawOrderInfo {
+    string transaction_id = 1;          // 充值提现单号(trade_itg Bank2CPre/C2BankPre生成)
+    string channel_transaction_id = 2;  // 银行渠道单号(bank_channel生成)
+    string user_id = 3;                 // 用户ID
+    int64 uid = 4;                      // 用户uid
+    int32 biz_type = 5;                 // 业务类型: 1=充值(Bank2C) 2=提现(C2Bank)
+    int32 bank_type = 6;                // 银行类型
+    int64 amount = 7;                   // 金额
+    int32 cur_type = 8;                 // 货币类型
+    int32 trade_state = 9;              // 交易状态: 1=初始 2=成功 3=失败
+    string memo = 10;                   // 备注
+    string create_time = 11;            // 创建时间
+    string update_time = 12;            // 更新时间
+}
+
 // 创建充值提现单请求
 message CreateRechargeWithdrawOrderReq {
     string transaction_id = 1;          // 充值提现单号(trade_itg Bank2CPre/C2BankPre生成)
     string channel_transaction_id = 2;  // 银行渠道单号(bank_channel生成)
     string user_id = 3;                 // 用户ID
     int64 uid = 4;                      // 用户uid
-    int32 order_type = 5;               // 单据类型: 1=充值(Bank2C) 2=提现(C2Bank)
+    int32 biz_type = 5;                 // 业务类型: 1=充值(Bank2C) 2=提现(C2Bank)
     int32 bank_type = 6;                // 银行类型
     int64 amount = 7;                   // 金额
     int32 cur_type = 8;                 // 货币类型
@@ -105,6 +121,16 @@ message UpdateRechargeWithdrawOrderStateRsp {
     string transaction_id = 1;
 }
 
+// 查询充值提现单请求
+message QueryRechargeWithdrawOrderReq {
+    string transaction_id = 1;  // 充值提现单号
+}
+
+// 查询充值提现单响应
+message QueryRechargeWithdrawOrderRsp {
+    RechargeWithdrawOrderInfo order_info = 1;
+}
+
 service OrderMgr {    
     rpc BanPayPreOrder(BanPayPreOrderReq) returns (BanPayPreOrderRsp);
     rpc BanPaySuccessOrder(BanPaySuccessOrderReq) returns (BanPaySuccessOrderRsp);
@@ -115,4 +141,6 @@ service OrderMgr {
     rpc CreateRechargeWithdrawOrder(CreateRechargeWithdrawOrderReq) returns (CreateRechargeWithdrawOrderRsp);
     // 更新充值提现单状态(成功/失败)
     rpc UpdateRechargeWithdrawOrderState(UpdateRechargeWithdrawOrderStateReq) returns (UpdateRechargeWithdrawOrderStateRsp);
+    // 查询充值提现单
+    rpc QueryRechargeWithdrawOrder(QueryRechargeWithdrawOrderReq) returns (QueryRechargeWithdrawOrderRsp);
 }

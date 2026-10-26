@@ -34,7 +34,7 @@ func (l *CreateRechargeWithdrawOrderLogic) CreateRechargeWithdrawOrder(in *order
 		ChannelTransactionId: in.ChannelTransactionId,
 		UserId:               in.UserId,
 		Uid:                  in.Uid,
-		OrderType:            int64(in.OrderType),
+		BizType:              int64(in.BizType),
 		BankType:             int64(in.BankType),
 		Amount:               in.Amount,
 		CurType:              int64(in.CurType),

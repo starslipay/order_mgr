@@ -16,8 +16,8 @@ const (
 )
 
 const (
-	RechargeWithdrawOrderTypeRecharge = 1 // 充值(Bank2C)
-	RechargeWithdrawOrderTypeWithdraw = 2 // 提现(C2Bank)
+	RechargeWithdrawBizTypeRecharge = 1 // 充值(Bank2C)
+	RechargeWithdrawBizTypeWithdraw = 2 // 提现(C2Bank)
 )
 
 const (

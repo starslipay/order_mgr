@@ -42,7 +42,7 @@ type (
 		ChannelTransactionId string    `db:"channel_transaction_id"` // 银行渠道单号(bank_channel生成)
 		UserId               string    `db:"user_id"`                // 用户ID
 		Uid                  int64     `db:"uid"`                    // 用户uid
-		OrderType            int64     `db:"order_type"`             // 单据类型: 1=充值(Bank2C) 2=提现(C2Bank)
+		BizType              int64     `db:"biz_type"`               // 业务类型: 1=充值(Bank2C) 2=提现(C2Bank)
 		BankType             int64     `db:"bank_type"`              // 银行类型
 		Amount               int64     `db:"amount"`                 // 金额
 		CurType              int64     `db:"cur_type"`               // 货币类型
@@ -96,13 +96,13 @@ func (m *defaultTRechargeWithdrawOrderModel) FindOneByChannelTransactionId(ctx c
 
 func (m *defaultTRechargeWithdrawOrderModel) Insert(ctx context.Context, data *TRechargeWithdrawOrder) (sql.Result, error) {
 	query := fmt.Sprintf("insert into %s (%s) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", m.table, tRechargeWithdrawOrderRowsExpectAutoSet)
-	ret, err := m.conn.ExecCtx(ctx, query, data.TransactionId, data.ChannelTransactionId, data.UserId, data.Uid, data.OrderType, data.BankType, data.Amount, data.CurType, data.TradeState, data.Memo)
+	ret, err := m.conn.ExecCtx(ctx, query, data.TransactionId, data.ChannelTransactionId, data.UserId, data.Uid, data.BizType, data.BankType, data.Amount, data.CurType, data.TradeState, data.Memo)
 	return ret, err
 }
 
 func (m *defaultTRechargeWithdrawOrderModel) Update(ctx context.Context, newData *TRechargeWithdrawOrder) error {
 	query := fmt.Sprintf("update %s set %s where `transaction_id` = ?", m.table, tRechargeWithdrawOrderRowsWithPlaceHolder)
-	_, err := m.conn.ExecCtx(ctx, query, newData.ChannelTransactionId, newData.UserId, newData.Uid, newData.OrderType, newData.BankType, newData.Amount, newData.CurType, newData.TradeState, newData.Memo, newData.TransactionId)
+	_, err := m.conn.ExecCtx(ctx, query, newData.ChannelTransactionId, newData.UserId, newData.Uid, newData.BizType, newData.BankType, newData.Amount, newData.CurType, newData.TradeState, newData.Memo, newData.TransactionId)
 	return err
 }
 

@@ -24,7 +24,7 @@ CREATE TABLE `t_recharge_withdraw_order` (
   `channel_transaction_id` VARCHAR(64) NOT NULL COMMENT '银行渠道单号(bank_channel生成)',
   `user_id` VARCHAR(64) NOT NULL COMMENT '用户ID',
   `uid` BIGINT NOT NULL COMMENT '用户uid',
-  `order_type` TINYINT NOT NULL COMMENT '单据类型: 1=充值(Bank2C) 2=提现(C2Bank)',
+  `biz_type` TINYINT NOT NULL COMMENT '业务类型: 1=充值(Bank2C) 2=提现(C2Bank)',
   `bank_type` TINYINT NOT NULL COMMENT '银行类型',
   `amount` BIGINT NOT NULL COMMENT '金额',
   `cur_type` TINYINT NOT NULL COMMENT '货币类型',

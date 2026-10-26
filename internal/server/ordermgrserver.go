@@ -57,3 +57,8 @@ func (s *OrderMgrServer) UpdateRechargeWithdrawOrderState(ctx context.Context, i
 	l := logic.NewUpdateRechargeWithdrawOrderStateLogic(ctx, s.svcCtx)
 	return l.UpdateRechargeWithdrawOrderState(in)
 }
+
+func (s *OrderMgrServer) QueryRechargeWithdrawOrder(ctx context.Context, in *order_mgr_pb.QueryRechargeWithdrawOrderReq) (*order_mgr_pb.QueryRechargeWithdrawOrderRsp, error) {
+	l := logic.NewQueryRechargeWithdrawOrderLogic(ctx, s.svcCtx)
+	return l.QueryRechargeWithdrawOrder(in)
+}

@@ -715,6 +715,139 @@ func (x *RefundOrderRsp) GetTransactionId() string {
 	return ""
 }
 
+// 充值提现单信息
+type RechargeWithdrawOrderInfo struct {
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId        string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"`                        // 充值提现单号(trade_itg Bank2CPre/C2BankPre生成)
+	ChannelTransactionId string                 `protobuf:"bytes,2,opt,name=channel_transaction_id,json=channelTransactionId,proto3" json:"channel_transaction_id,omitempty"` // 银行渠道单号(bank_channel生成)
+	UserId               string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                             // 用户ID
+	Uid                  int64                  `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`                                                                // 用户uid
+	BizType              int32                  `protobuf:"varint,5,opt,name=biz_type,json=bizType,proto3" json:"biz_type,omitempty"`                                         // 业务类型: 1=充值(Bank2C) 2=提现(C2Bank)
+	BankType             int32                  `protobuf:"varint,6,opt,name=bank_type,json=bankType,proto3" json:"bank_type,omitempty"`                                      // 银行类型
+	Amount               int64                  `protobuf:"varint,7,opt,name=amount,proto3" json:"amount,omitempty"`                                                          // 金额
+	CurType              int32                  `protobuf:"varint,8,opt,name=cur_type,json=curType,proto3" json:"cur_type,omitempty"`                                         // 货币类型
+	TradeState           int32                  `protobuf:"varint,9,opt,name=trade_state,json=tradeState,proto3" json:"trade_state,omitempty"`                                // 交易状态: 1=初始 2=成功 3=失败
+	Memo                 string                 `protobuf:"bytes,10,opt,name=memo,proto3" json:"memo,omitempty"`                                                              // 备注
+	CreateTime           string                 `protobuf:"bytes,11,opt,name=create_time,json=createTime,proto3" json:"create_time,omitempty"`                                // 创建时间
+	UpdateTime           string                 `protobuf:"bytes,12,opt,name=update_time,json=updateTime,proto3" json:"update_time,omitempty"`                                // 更新时间
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
+}
+
+func (x *RechargeWithdrawOrderInfo) Reset() {
+	*x = RechargeWithdrawOrderInfo{}
+	mi := &file_order_mgr_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RechargeWithdrawOrderInfo) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RechargeWithdrawOrderInfo) ProtoMessage() {}
+
+func (x *RechargeWithdrawOrderInfo) ProtoReflect() protoreflect.Message {
+	mi := &file_order_mgr_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RechargeWithdrawOrderInfo.ProtoReflect.Descriptor instead.
+func (*RechargeWithdrawOrderInfo) Descriptor() ([]byte, []int) {
+	return file_order_mgr_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *RechargeWithdrawOrderInfo) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+func (x *RechargeWithdrawOrderInfo) GetChannelTransactionId() string {
+	if x != nil {
+		return x.ChannelTransactionId
+	}
+	return ""
+}
+
+func (x *RechargeWithdrawOrderInfo) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *RechargeWithdrawOrderInfo) GetUid() int64 {
+	if x != nil {
+		return x.Uid
+	}
+	return 0
+}
+
+func (x *RechargeWithdrawOrderInfo) GetBizType() int32 {
+	if x != nil {
+		return x.BizType
+	}
+	return 0
+}
+
+func (x *RechargeWithdrawOrderInfo) GetBankType() int32 {
+	if x != nil {
+		return x.BankType
+	}
+	return 0
+}
+
+func (x *RechargeWithdrawOrderInfo) GetAmount() int64 {
+	if x != nil {
+		return x.Amount
+	}
+	return 0
+}
+
+func (x *RechargeWithdrawOrderInfo) GetCurType() int32 {
+	if x != nil {
+		return x.CurType
+	}
+	return 0
+}
+
+func (x *RechargeWithdrawOrderInfo) GetTradeState() int32 {
+	if x != nil {
+		return x.TradeState
+	}
+	return 0
+}
+
+func (x *RechargeWithdrawOrderInfo) GetMemo() string {
+	if x != nil {
+		return x.Memo
+	}
+	return ""
+}
+
+func (x *RechargeWithdrawOrderInfo) GetCreateTime() string {
+	if x != nil {
+		return x.CreateTime
+	}
+	return ""
+}
+
+func (x *RechargeWithdrawOrderInfo) GetUpdateTime() string {
+	if x != nil {
+		return x.UpdateTime
+	}
+	return ""
+}
+
 // 创建充值提现单请求
 type CreateRechargeWithdrawOrderReq struct {
 	state                protoimpl.MessageState `protogen:"open.v1"`
@@ -722,7 +855,7 @@ type CreateRechargeWithdrawOrderReq struct {
 	ChannelTransactionId string                 `protobuf:"bytes,2,opt,name=channel_transaction_id,json=channelTransactionId,proto3" json:"channel_transaction_id,omitempty"` // 银行渠道单号(bank_channel生成)
 	UserId               string                 `protobuf:"bytes,3,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`                                             // 用户ID
 	Uid                  int64                  `protobuf:"varint,4,opt,name=uid,proto3" json:"uid,omitempty"`                                                                // 用户uid
-	OrderType            int32                  `protobuf:"varint,5,opt,name=order_type,json=orderType,proto3" json:"order_type,omitempty"`                                   // 单据类型: 1=充值(Bank2C) 2=提现(C2Bank)
+	BizType              int32                  `protobuf:"varint,5,opt,name=biz_type,json=bizType,proto3" json:"biz_type,omitempty"`                                         // 业务类型: 1=充值(Bank2C) 2=提现(C2Bank)
 	BankType             int32                  `protobuf:"varint,6,opt,name=bank_type,json=bankType,proto3" json:"bank_type,omitempty"`                                      // 银行类型
 	Amount               int64                  `protobuf:"varint,7,opt,name=amount,proto3" json:"amount,omitempty"`                                                          // 金额
 	CurType              int32                  `protobuf:"varint,8,opt,name=cur_type,json=curType,proto3" json:"cur_type,omitempty"`                                         // 货币类型
@@ -733,7 +866,7 @@ type CreateRechargeWithdrawOrderReq struct {
 
 func (x *CreateRechargeWithdrawOrderReq) Reset() {
 	*x = CreateRechargeWithdrawOrderReq{}
-	mi := &file_order_mgr_proto_msgTypes[11]
+	mi := &file_order_mgr_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -745,7 +878,7 @@ func (x *CreateRechargeWithdrawOrderReq) String() string {
 func (*CreateRechargeWithdrawOrderReq) ProtoMessage() {}
 
 func (x *CreateRechargeWithdrawOrderReq) ProtoReflect() protoreflect.Message {
-	mi := &file_order_mgr_proto_msgTypes[11]
+	mi := &file_order_mgr_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -758,7 +891,7 @@ func (x *CreateRechargeWithdrawOrderReq) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRechargeWithdrawOrderReq.ProtoReflect.Descriptor instead.
 func (*CreateRechargeWithdrawOrderReq) Descriptor() ([]byte, []int) {
-	return file_order_mgr_proto_rawDescGZIP(), []int{11}
+	return file_order_mgr_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *CreateRechargeWithdrawOrderReq) GetTransactionId() string {
@@ -789,9 +922,9 @@ func (x *CreateRechargeWithdrawOrderReq) GetUid() int64 {
 	return 0
 }
 
-func (x *CreateRechargeWithdrawOrderReq) GetOrderType() int32 {
+func (x *CreateRechargeWithdrawOrderReq) GetBizType() int32 {
 	if x != nil {
-		return x.OrderType
+		return x.BizType
 	}
 	return 0
 }
@@ -834,7 +967,7 @@ type CreateRechargeWithdrawOrderRsp struct {
 
 func (x *CreateRechargeWithdrawOrderRsp) Reset() {
 	*x = CreateRechargeWithdrawOrderRsp{}
-	mi := &file_order_mgr_proto_msgTypes[12]
+	mi := &file_order_mgr_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -846,7 +979,7 @@ func (x *CreateRechargeWithdrawOrderRsp) String() string {
 func (*CreateRechargeWithdrawOrderRsp) ProtoMessage() {}
 
 func (x *CreateRechargeWithdrawOrderRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_order_mgr_proto_msgTypes[12]
+	mi := &file_order_mgr_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -859,7 +992,7 @@ func (x *CreateRechargeWithdrawOrderRsp) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateRechargeWithdrawOrderRsp.ProtoReflect.Descriptor instead.
 func (*CreateRechargeWithdrawOrderRsp) Descriptor() ([]byte, []int) {
-	return file_order_mgr_proto_rawDescGZIP(), []int{12}
+	return file_order_mgr_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *CreateRechargeWithdrawOrderRsp) GetTransactionId() string {
@@ -880,7 +1013,7 @@ type UpdateRechargeWithdrawOrderStateReq struct {
 
 func (x *UpdateRechargeWithdrawOrderStateReq) Reset() {
 	*x = UpdateRechargeWithdrawOrderStateReq{}
-	mi := &file_order_mgr_proto_msgTypes[13]
+	mi := &file_order_mgr_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -892,7 +1025,7 @@ func (x *UpdateRechargeWithdrawOrderStateReq) String() string {
 func (*UpdateRechargeWithdrawOrderStateReq) ProtoMessage() {}
 
 func (x *UpdateRechargeWithdrawOrderStateReq) ProtoReflect() protoreflect.Message {
-	mi := &file_order_mgr_proto_msgTypes[13]
+	mi := &file_order_mgr_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -905,7 +1038,7 @@ func (x *UpdateRechargeWithdrawOrderStateReq) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use UpdateRechargeWithdrawOrderStateReq.ProtoReflect.Descriptor instead.
 func (*UpdateRechargeWithdrawOrderStateReq) Descriptor() ([]byte, []int) {
-	return file_order_mgr_proto_rawDescGZIP(), []int{13}
+	return file_order_mgr_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *UpdateRechargeWithdrawOrderStateReq) GetTransactionId() string {
@@ -932,7 +1065,7 @@ type UpdateRechargeWithdrawOrderStateRsp struct {
 
 func (x *UpdateRechargeWithdrawOrderStateRsp) Reset() {
 	*x = UpdateRechargeWithdrawOrderStateRsp{}
-	mi := &file_order_mgr_proto_msgTypes[14]
+	mi := &file_order_mgr_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -944,7 +1077,7 @@ func (x *UpdateRechargeWithdrawOrderStateRsp) String() string {
 func (*UpdateRechargeWithdrawOrderStateRsp) ProtoMessage() {}
 
 func (x *UpdateRechargeWithdrawOrderStateRsp) ProtoReflect() protoreflect.Message {
-	mi := &file_order_mgr_proto_msgTypes[14]
+	mi := &file_order_mgr_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -957,7 +1090,7 @@ func (x *UpdateRechargeWithdrawOrderStateRsp) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use UpdateRechargeWithdrawOrderStateRsp.ProtoReflect.Descriptor instead.
 func (*UpdateRechargeWithdrawOrderStateRsp) Descriptor() ([]byte, []int) {
-	return file_order_mgr_proto_rawDescGZIP(), []int{14}
+	return file_order_mgr_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *UpdateRechargeWithdrawOrderStateRsp) GetTransactionId() string {
@@ -965,6 +1098,96 @@ func (x *UpdateRechargeWithdrawOrderStateRsp) GetTransactionId() string {
 		return x.TransactionId
 	}
 	return ""
+}
+
+// 查询充值提现单请求
+type QueryRechargeWithdrawOrderReq struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TransactionId string                 `protobuf:"bytes,1,opt,name=transaction_id,json=transactionId,proto3" json:"transaction_id,omitempty"` // 充值提现单号
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryRechargeWithdrawOrderReq) Reset() {
+	*x = QueryRechargeWithdrawOrderReq{}
+	mi := &file_order_mgr_proto_msgTypes[16]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryRechargeWithdrawOrderReq) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryRechargeWithdrawOrderReq) ProtoMessage() {}
+
+func (x *QueryRechargeWithdrawOrderReq) ProtoReflect() protoreflect.Message {
+	mi := &file_order_mgr_proto_msgTypes[16]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryRechargeWithdrawOrderReq.ProtoReflect.Descriptor instead.
+func (*QueryRechargeWithdrawOrderReq) Descriptor() ([]byte, []int) {
+	return file_order_mgr_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *QueryRechargeWithdrawOrderReq) GetTransactionId() string {
+	if x != nil {
+		return x.TransactionId
+	}
+	return ""
+}
+
+// 查询充值提现单响应
+type QueryRechargeWithdrawOrderRsp struct {
+	state         protoimpl.MessageState     `protogen:"open.v1"`
+	OrderInfo     *RechargeWithdrawOrderInfo `protobuf:"bytes,1,opt,name=order_info,json=orderInfo,proto3" json:"order_info,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *QueryRechargeWithdrawOrderRsp) Reset() {
+	*x = QueryRechargeWithdrawOrderRsp{}
+	mi := &file_order_mgr_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *QueryRechargeWithdrawOrderRsp) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*QueryRechargeWithdrawOrderRsp) ProtoMessage() {}
+
+func (x *QueryRechargeWithdrawOrderRsp) ProtoReflect() protoreflect.Message {
+	mi := &file_order_mgr_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use QueryRechargeWithdrawOrderRsp.ProtoReflect.Descriptor instead.
+func (*QueryRechargeWithdrawOrderRsp) Descriptor() ([]byte, []int) {
+	return file_order_mgr_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *QueryRechargeWithdrawOrderRsp) GetOrderInfo() *RechargeWithdrawOrderInfo {
+	if x != nil {
+		return x.OrderInfo
+	}
+	return nil
 }
 
 var File_order_mgr_proto protoreflect.FileDescriptor
@@ -1030,14 +1253,30 @@ const file_order_mgr_proto_rawDesc = "" +
 	"\vrefund_time\x18\x02 \x01(\tR\n" +
 	"refundTime\"7\n" +
 	"\x0eRefundOrderRsp\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"\xab\x02\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"\x85\x03\n" +
+	"\x19RechargeWithdrawOrderInfo\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x124\n" +
+	"\x16channel_transaction_id\x18\x02 \x01(\tR\x14channelTransactionId\x12\x17\n" +
+	"\auser_id\x18\x03 \x01(\tR\x06userId\x12\x10\n" +
+	"\x03uid\x18\x04 \x01(\x03R\x03uid\x12\x19\n" +
+	"\bbiz_type\x18\x05 \x01(\x05R\abizType\x12\x1b\n" +
+	"\tbank_type\x18\x06 \x01(\x05R\bbankType\x12\x16\n" +
+	"\x06amount\x18\a \x01(\x03R\x06amount\x12\x19\n" +
+	"\bcur_type\x18\b \x01(\x05R\acurType\x12\x1f\n" +
+	"\vtrade_state\x18\t \x01(\x05R\n" +
+	"tradeState\x12\x12\n" +
+	"\x04memo\x18\n" +
+	" \x01(\tR\x04memo\x12\x1f\n" +
+	"\vcreate_time\x18\v \x01(\tR\n" +
+	"createTime\x12\x1f\n" +
+	"\vupdate_time\x18\f \x01(\tR\n" +
+	"updateTime\"\xa7\x02\n" +
 	"\x1eCreateRechargeWithdrawOrderReq\x12%\n" +
 	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\x124\n" +
 	"\x16channel_transaction_id\x18\x02 \x01(\tR\x14channelTransactionId\x12\x17\n" +
 	"\auser_id\x18\x03 \x01(\tR\x06userId\x12\x10\n" +
-	"\x03uid\x18\x04 \x01(\x03R\x03uid\x12\x1d\n" +
-	"\n" +
-	"order_type\x18\x05 \x01(\x05R\torderType\x12\x1b\n" +
+	"\x03uid\x18\x04 \x01(\x03R\x03uid\x12\x19\n" +
+	"\bbiz_type\x18\x05 \x01(\x05R\abizType\x12\x1b\n" +
 	"\tbank_type\x18\x06 \x01(\x05R\bbankType\x12\x16\n" +
 	"\x06amount\x18\a \x01(\x03R\x06amount\x12\x19\n" +
 	"\bcur_type\x18\b \x01(\x05R\acurType\x12\x12\n" +
@@ -1049,7 +1288,12 @@ const file_order_mgr_proto_rawDesc = "" +
 	"\vtrade_state\x18\x02 \x01(\x05R\n" +
 	"tradeState\"L\n" +
 	"#UpdateRechargeWithdrawOrderStateRsp\x12%\n" +
-	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId2\xf5\x04\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"F\n" +
+	"\x1dQueryRechargeWithdrawOrderReq\x12%\n" +
+	"\x0etransaction_id\x18\x01 \x01(\tR\rtransactionId\"d\n" +
+	"\x1dQueryRechargeWithdrawOrderRsp\x12C\n" +
+	"\n" +
+	"order_info\x18\x01 \x01(\v2$.order_mgr.RechargeWithdrawOrderInfoR\torderInfo2\xe7\x05\n" +
 	"\bOrderMgr\x12L\n" +
 	"\x0eBanPayPreOrder\x12\x1c.order_mgr.BanPayPreOrderReq\x1a\x1c.order_mgr.BanPayPreOrderRsp\x12X\n" +
 	"\x12BanPaySuccessOrder\x12 .order_mgr.BanPaySuccessOrderReq\x1a .order_mgr.BanPaySuccessOrderRsp\x12@\n" +
@@ -1059,7 +1303,8 @@ const file_order_mgr_proto_rawDesc = "" +
 	"QueryOrder\x12\x18.order_mgr.QueryOrderReq\x1a\x18.order_mgr.QueryOrderRsp\x12C\n" +
 	"\vRefundOrder\x12\x19.order_mgr.RefundOrderReq\x1a\x19.order_mgr.RefundOrderRsp\x12s\n" +
 	"\x1bCreateRechargeWithdrawOrder\x12).order_mgr.CreateRechargeWithdrawOrderReq\x1a).order_mgr.CreateRechargeWithdrawOrderRsp\x12\x82\x01\n" +
-	" UpdateRechargeWithdrawOrderState\x12..order_mgr.UpdateRechargeWithdrawOrderStateReq\x1a..order_mgr.UpdateRechargeWithdrawOrderStateRspB\x10Z\x0e./order_mgr_pbb\x06proto3"
+	" UpdateRechargeWithdrawOrderState\x12..order_mgr.UpdateRechargeWithdrawOrderStateReq\x1a..order_mgr.UpdateRechargeWithdrawOrderStateRsp\x12p\n" +
+	"\x1aQueryRechargeWithdrawOrder\x12(.order_mgr.QueryRechargeWithdrawOrderReq\x1a(.order_mgr.QueryRechargeWithdrawOrderRspB\x10Z\x0e./order_mgr_pbb\x06proto3"
 
 var (
 	file_order_mgr_proto_rawDescOnce sync.Once
@@ -1073,7 +1318,7 @@ func file_order_mgr_proto_rawDescGZIP() []byte {
 	return file_order_mgr_proto_rawDescData
 }
 
-var file_order_mgr_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
+var file_order_mgr_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_order_mgr_proto_goTypes = []any{
 	(*OrderInfo)(nil),                           // 0: order_mgr.OrderInfo
 	(*BanPayPreOrderReq)(nil),                   // 1: order_mgr.BanPayPreOrderReq
@@ -1086,33 +1331,39 @@ var file_order_mgr_proto_goTypes = []any{
 	(*QueryOrderRsp)(nil),                       // 8: order_mgr.QueryOrderRsp
 	(*RefundOrderReq)(nil),                      // 9: order_mgr.RefundOrderReq
 	(*RefundOrderRsp)(nil),                      // 10: order_mgr.RefundOrderRsp
-	(*CreateRechargeWithdrawOrderReq)(nil),      // 11: order_mgr.CreateRechargeWithdrawOrderReq
-	(*CreateRechargeWithdrawOrderRsp)(nil),      // 12: order_mgr.CreateRechargeWithdrawOrderRsp
-	(*UpdateRechargeWithdrawOrderStateReq)(nil), // 13: order_mgr.UpdateRechargeWithdrawOrderStateReq
-	(*UpdateRechargeWithdrawOrderStateRsp)(nil), // 14: order_mgr.UpdateRechargeWithdrawOrderStateRsp
+	(*RechargeWithdrawOrderInfo)(nil),           // 11: order_mgr.RechargeWithdrawOrderInfo
+	(*CreateRechargeWithdrawOrderReq)(nil),      // 12: order_mgr.CreateRechargeWithdrawOrderReq
+	(*CreateRechargeWithdrawOrderRsp)(nil),      // 13: order_mgr.CreateRechargeWithdrawOrderRsp
+	(*UpdateRechargeWithdrawOrderStateReq)(nil), // 14: order_mgr.UpdateRechargeWithdrawOrderStateReq
+	(*UpdateRechargeWithdrawOrderStateRsp)(nil), // 15: order_mgr.UpdateRechargeWithdrawOrderStateRsp
+	(*QueryRechargeWithdrawOrderReq)(nil),       // 16: order_mgr.QueryRechargeWithdrawOrderReq
+	(*QueryRechargeWithdrawOrderRsp)(nil),       // 17: order_mgr.QueryRechargeWithdrawOrderRsp
 }
 var file_order_mgr_proto_depIdxs = []int32{
 	0,  // 0: order_mgr.BanPaySuccessOrderRsp.order_info:type_name -> order_mgr.OrderInfo
 	0,  // 1: order_mgr.QueryOrderRsp.order_info:type_name -> order_mgr.OrderInfo
-	1,  // 2: order_mgr.OrderMgr.BanPayPreOrder:input_type -> order_mgr.BanPayPreOrderReq
-	3,  // 3: order_mgr.OrderMgr.BanPaySuccessOrder:input_type -> order_mgr.BanPaySuccessOrderReq
-	5,  // 4: order_mgr.OrderMgr.CloseOrder:input_type -> order_mgr.CloseOrderReq
-	7,  // 5: order_mgr.OrderMgr.QueryOrder:input_type -> order_mgr.QueryOrderReq
-	9,  // 6: order_mgr.OrderMgr.RefundOrder:input_type -> order_mgr.RefundOrderReq
-	11, // 7: order_mgr.OrderMgr.CreateRechargeWithdrawOrder:input_type -> order_mgr.CreateRechargeWithdrawOrderReq
-	13, // 8: order_mgr.OrderMgr.UpdateRechargeWithdrawOrderState:input_type -> order_mgr.UpdateRechargeWithdrawOrderStateReq
-	2,  // 9: order_mgr.OrderMgr.BanPayPreOrder:output_type -> order_mgr.BanPayPreOrderRsp
-	4,  // 10: order_mgr.OrderMgr.BanPaySuccessOrder:output_type -> order_mgr.BanPaySuccessOrderRsp
-	6,  // 11: order_mgr.OrderMgr.CloseOrder:output_type -> order_mgr.CloseOrderRsp
-	8,  // 12: order_mgr.OrderMgr.QueryOrder:output_type -> order_mgr.QueryOrderRsp
-	10, // 13: order_mgr.OrderMgr.RefundOrder:output_type -> order_mgr.RefundOrderRsp
-	12, // 14: order_mgr.OrderMgr.CreateRechargeWithdrawOrder:output_type -> order_mgr.CreateRechargeWithdrawOrderRsp
-	14, // 15: order_mgr.OrderMgr.UpdateRechargeWithdrawOrderState:output_type -> order_mgr.UpdateRechargeWithdrawOrderStateRsp
-	9,  // [9:16] is the sub-list for method output_type
-	2,  // [2:9] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	11, // 2: order_mgr.QueryRechargeWithdrawOrderRsp.order_info:type_name -> order_mgr.RechargeWithdrawOrderInfo
+	1,  // 3: order_mgr.OrderMgr.BanPayPreOrder:input_type -> order_mgr.BanPayPreOrderReq
+	3,  // 4: order_mgr.OrderMgr.BanPaySuccessOrder:input_type -> order_mgr.BanPaySuccessOrderReq
+	5,  // 5: order_mgr.OrderMgr.CloseOrder:input_type -> order_mgr.CloseOrderReq
+	7,  // 6: order_mgr.OrderMgr.QueryOrder:input_type -> order_mgr.QueryOrderReq
+	9,  // 7: order_mgr.OrderMgr.RefundOrder:input_type -> order_mgr.RefundOrderReq
+	12, // 8: order_mgr.OrderMgr.CreateRechargeWithdrawOrder:input_type -> order_mgr.CreateRechargeWithdrawOrderReq
+	14, // 9: order_mgr.OrderMgr.UpdateRechargeWithdrawOrderState:input_type -> order_mgr.UpdateRechargeWithdrawOrderStateReq
+	16, // 10: order_mgr.OrderMgr.QueryRechargeWithdrawOrder:input_type -> order_mgr.QueryRechargeWithdrawOrderReq
+	2,  // 11: order_mgr.OrderMgr.BanPayPreOrder:output_type -> order_mgr.BanPayPreOrderRsp
+	4,  // 12: order_mgr.OrderMgr.BanPaySuccessOrder:output_type -> order_mgr.BanPaySuccessOrderRsp
+	6,  // 13: order_mgr.OrderMgr.CloseOrder:output_type -> order_mgr.CloseOrderRsp
+	8,  // 14: order_mgr.OrderMgr.QueryOrder:output_type -> order_mgr.QueryOrderRsp
+	10, // 15: order_mgr.OrderMgr.RefundOrder:output_type -> order_mgr.RefundOrderRsp
+	13, // 16: order_mgr.OrderMgr.CreateRechargeWithdrawOrder:output_type -> order_mgr.CreateRechargeWithdrawOrderRsp
+	15, // 17: order_mgr.OrderMgr.UpdateRechargeWithdrawOrderState:output_type -> order_mgr.UpdateRechargeWithdrawOrderStateRsp
+	17, // 18: order_mgr.OrderMgr.QueryRechargeWithdrawOrder:output_type -> order_mgr.QueryRechargeWithdrawOrderRsp
+	11, // [11:19] is the sub-list for method output_type
+	3,  // [3:11] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_order_mgr_proto_init() }
@@ -1126,7 +1377,7 @@ func file_order_mgr_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_order_mgr_proto_rawDesc), len(file_order_mgr_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   15,
+			NumMessages:   18,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
